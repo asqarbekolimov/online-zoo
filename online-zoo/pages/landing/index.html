@@ -795,7 +795,7 @@
                   about and make a real personal impact. Never doubt that your
                   donation can make a difference even if it is small.
                 </p>
-                <button class="btn">
+                <button class="btn donation-trigger" id="donation-btn">
                   <span class="text-button">Donate now</span>
 
                   <svg
@@ -1210,7 +1210,7 @@
             </li>
           </ul>
 
-          <button class="outline-btn">
+          <button class="outline-btn donation-trigger" id="donation-btn">
             <span class="text-button">donate for volunteers</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -1257,6 +1257,52 @@
         </div>
       </div>
     </footer>
+
+    <!-- Donation Modal -->
+    <div class="modal-overlay hidden" id="donationModal">
+      <div class="modal">
+        <button class="modal-close" id="modalClose" aria-label="Close modal">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 30 30"
+            fill="none"
+          >
+            <path
+              d="M29.0002 1L1 29.0002M1.00024 1L29.0005 29.0002"
+              stroke="white"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+        <div class="modal-image">
+          <img
+            src="../../assets/images/modal-hero.png"
+            alt="Hand holding animal paw"
+          />
+        </div>
+        <div class="modal-content">
+          <h2 class="modal-title">together we care, save and protect!</h2>
+          <p class="modal-description">
+            Your most generous gift not only cares for countless animals, but it
+            also offers hope and a vital lifeline to the world's most endangered
+            wildlife relying on us to survive.
+          </p>
+          <div class="modal-buttons">
+            <button class="donation-btn">$20</button>
+            <button class="donation-btn">$30</button>
+            <button class="donation-btn">$50</button>
+            <button class="donation-btn">$80</button>
+            <button class="donation-btn">$100</button>
+            <button class="donation-btn">other amount</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <script src="script.js"></script>
   </body>
 </html>

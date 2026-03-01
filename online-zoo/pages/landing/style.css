@@ -1088,3 +1088,205 @@
     padding: 100px 0;
   }
 }
+
+/* ===== DONATION MODAL ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+
+.modal-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.modal {
+  position: relative;
+  background-color: var(--color-white);
+  border-radius: 5px;
+  box-shadow: 0px 4px 50px 0px rgba(0, 0, 0, 0.3);
+  max-width: 1160px;
+  width: 90%;
+  max-height: 95vh;
+  overflow: auto;
+}
+
+.modal-close {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.5);
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.modal-close:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.modal-close:hover svg path {
+  stroke: var(--color-orange);
+}
+
+.modal-image {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+}
+
+.modal-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.modal-content {
+  padding: 20px 80px 40px;
+  text-align: center;
+}
+
+.modal-title {
+  font-family: var(--font-primary);
+  font-size: 54px;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: uppercase;
+  color: var(--color-orange);
+  margin-bottom: 15px;
+}
+
+.modal-description {
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-black);
+  max-width: 570px;
+  margin: 0 auto 25px;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.donation-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 130px;
+  height: 60px;
+  padding: 18px 35px;
+  background-color: var(--color-turquoise);
+  border-radius: 5px;
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: normal;
+  text-transform: uppercase;
+  color: var(--color-white);
+  border: none;
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+}
+
+.donation-btn:hover {
+  background-color: var(--color-orange);
+  transform: translateY(-2px);
+}
+
+/* Modal responsive styles */
+@media (max-width: 1024px) {
+  .modal-title {
+    font-size: 42px;
+  }
+
+  .modal-buttons {
+    gap: 20px;
+  }
+
+  .donation-btn {
+    min-width: 120px;
+    padding: 20px 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-image {
+    height: 250px;
+  }
+
+  .modal-content {
+    padding: 20px 30px 40px;
+  }
+
+  .modal-title {
+    font-size: 32px;
+  }
+
+  .modal-description {
+    font-size: 16px;
+  }
+
+  .modal-buttons {
+    gap: 15px;
+  }
+
+  .donation-btn {
+    min-width: 100px;
+    height: 60px;
+    padding: 15px 25px;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .modal-close {
+    top: 15px;
+    right: 15px;
+  }
+
+  .modal-image {
+    height: 180px;
+  }
+
+  .modal-title {
+    font-size: 24px;
+  }
+
+  .modal-buttons {
+    gap: 10px;
+  }
+
+  .donation-btn {
+    min-width: 80px;
+    height: 50px;
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
