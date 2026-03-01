@@ -139,12 +139,13 @@
             <div class="donation_amount">
               <input
                 class="amount-input"
-                type="text"
+                type="number"
+                min="1"
                 name="donation_amount"
-                id="donation_amount"
+                id="quickDonationAmount"
                 placeholder="$ Donation Amount"
               />
-              <button class="text-button btn">
+              <button class="text-button btn" id="quickDonateBtn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="26"

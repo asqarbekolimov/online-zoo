@@ -21,9 +21,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const donationModal = document.getElementById("donationModal");
   const modalClose = document.getElementById("modalClose");
-  const donationTriggers = document.querySelectorAll(
-    ".donation-trigger, .quick_donation .btn",
-  );
+  const donationTriggers = document.querySelectorAll(".donation-trigger");
+  const quickDonateBtn = document.getElementById("quickDonateBtn");
+  const quickDonationAmount = document.getElementById("quickDonationAmount");
 
   function openDonationModal() {
     donationModal.classList.remove("hidden");
@@ -62,6 +62,26 @@ document.addEventListener("DOMContentLoaded", () => {
       openDonationModal();
     });
   });
+
+  if (quickDonateBtn) {
+    quickDonateBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const amount = quickDonationAmount ? quickDonationAmount.value : "";
+      openDonationFormModal(amount ? "other" : null);
+      if (amount) {
+        const otherInput = document.querySelector(".other-amount-input");
+        if (otherInput) {
+          otherInput.value = amount;
+        }
+      }
+    });
+  }
+
+  if (quickDonationAmount) {
+    quickDonationAmount.addEventListener("input", (e) => {
+      e.target.value = e.target.value.replace(/[^0-9]/g, "");
+    });
+  }
 
   const donationFormModal = document.getElementById("donationFormModal");
   const donationFormClose = document.getElementById("donationFormClose");
