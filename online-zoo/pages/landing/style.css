@@ -1290,3 +1290,586 @@
     font-size: 14px;
   }
 }
+
+/* ===== DONATION FORM MODAL (3 STEPS) ===== */
+.donation-form-modal {
+  position: relative;
+  background-color: var(--color-white);
+  border-radius: 5px;
+  box-shadow: 0px 4px 50px 0px rgba(0, 0, 0, 0.5);
+  max-width: 920px;
+  width: 90%;
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.donation-form-modal .modal-close {
+  top: 20px;
+  right: 20px;
+}
+
+.donation-form-header {
+  background-color: var(--color-orange);
+  padding: 42px 0;
+  text-align: center;
+}
+
+.donation-form-title {
+  font-family: var(--font-primary);
+  font-size: 42px;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: uppercase;
+  color: var(--color-white);
+  margin: 0;
+}
+
+.donation-form-divider {
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 0;
+}
+
+.donation-step {
+  padding: 30px 120px 40px;
+}
+
+.donation-step.hidden {
+  display: none;
+}
+
+.donation-section-title {
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--color-black);
+  margin: 0 0 30px 0;
+}
+
+.donation-form-content {
+  margin-bottom: 40px;
+}
+
+.donation-label {
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-black);
+  margin-bottom: 20px;
+}
+
+.required {
+  color: var(--color-turquoise);
+}
+
+/* Amount Buttons */
+.amount-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.amount-btn {
+  min-width: 90px;
+  height: 55px;
+  padding: 15px 25px;
+  background-color: var(--color-turquoise);
+  border: none;
+  border-radius: 5px;
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-white);
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    transform 0.2s ease;
+}
+
+.amount-btn:hover,
+.amount-btn.selected {
+  background-color: var(--color-orange);
+  transform: translateY(-2px);
+}
+
+/* Other Amount Row */
+.other-amount-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.other-amount-btn {
+  min-width: 180px;
+  height: 55px;
+  padding: 15px 25px;
+  background-color: var(--color-turquoise);
+  border: none;
+  border-radius: 5px;
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-white);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.other-amount-btn:hover {
+  background-color: var(--color-orange);
+}
+
+.other-amount-input {
+  width: 200px;
+  height: 55px;
+  padding: 15px 20px;
+  border: 1px solid var(--color-black);
+  border-radius: 5px;
+  font-family: var(--font-primary);
+  font-size: 18px;
+  outline: none;
+}
+
+.other-amount-input:focus {
+  border-color: var(--color-turquoise);
+}
+
+/* Special Pet Row */
+.special-pet-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 25px;
+}
+
+.special-pet-btn {
+  min-width: 180px;
+  height: 55px;
+  padding: 15px 25px;
+  background-color: var(--color-turquoise);
+  border: none;
+  border-radius: 5px;
+  font-family: var(--font-primary);
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-white);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.special-pet-btn:hover {
+  background-color: var(--color-orange);
+}
+
+/* Custom Select Dropdown */
+.custom-select {
+  position: relative;
+  width: 340px;
+}
+
+.select-selected {
+  height: 55px;
+  padding: 15px 50px 15px 20px;
+  border: 1px solid var(--color-black);
+  border-radius: 5px;
+  font-family: var(--font-primary);
+  font-size: 18px;
+  color: #a4a8ae;
+  background-color: var(--color-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.select-selected::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 32px;
+  height: 100%;
+  background-color: #80cfc8;
+  border-radius: 0 5px 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.select-selected::before {
+  content: "";
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--color-black);
+  z-index: 1;
+}
+
+.select-selected.select-arrow-active::before {
+  border-top: none;
+  border-bottom: 8px solid var(--color-black);
+}
+
+.select-items {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-black);
+  border-top: none;
+  z-index: 99;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.select-items div {
+  padding: 15px 20px;
+  font-family: var(--font-primary);
+  font-size: 18px;
+  color: var(--color-black);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.select-items div:hover {
+  background-color: #80cfc8;
+}
+
+.select-items div.same-as-selected {
+  background-color: #80cfc8;
+}
+
+.select-hide {
+  display: none;
+}
+
+/* Checkbox */
+.recurring-gift {
+  margin-top: 10px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: var(--font-primary);
+  font-size: 18px;
+  color: var(--color-black);
+  padding-left: 45px;
+  position: relative;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 30px;
+  width: 30px;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-black);
+}
+
+.checkbox-container:hover input ~ .checkmark {
+  background-color: #f0f0f0;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: var(--color-turquoise);
+  border-color: var(--color-turquoise);
+}
+
+.checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark::after {
+  display: block;
+}
+
+.checkbox-container .checkmark::after {
+  left: 10px;
+  top: 5px;
+  width: 8px;
+  height: 14px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+/* Form Grid (Steps 2 & 3) */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-black);
+}
+
+.form-group input {
+  height: 55px;
+  padding: 15px 20px;
+  border: 1px solid var(--color-black);
+  border-radius: 5px;
+  font-family: var(--font-primary);
+  font-size: 18px;
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: var(--color-turquoise);
+}
+
+/* Footer */
+.donation-form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.step-indicators {
+  display: flex;
+  gap: 10px;
+}
+
+.step-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  border: 1px solid var(--color-turquoise);
+}
+
+.step-dot.active {
+  background-color: var(--color-turquoise);
+}
+
+.step-dot.completed {
+  background-color: var(--color-turquoise);
+}
+
+.footer-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.next-btn,
+.submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 180px;
+  height: 55px;
+  padding: 15px 35px;
+  background-color: var(--color-turquoise);
+  border: none;
+  border-radius: 5px;
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-white);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.next-btn:hover,
+.submit-btn:hover {
+  background-color: var(--color-orange);
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 150px;
+  height: 55px;
+  padding: 15px 35px;
+  background-color: transparent;
+  border: 1px solid var(--color-navy);
+  border-radius: 5px;
+  font-family: var(--font-primary);
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  cursor: pointer;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+.back-btn:hover {
+  background-color: var(--color-navy);
+  color: var(--color-white);
+}
+
+.back-btn:hover svg path {
+  fill: var(--color-white);
+}
+
+/* Donation Form Responsive */
+@media (max-width: 1024px) {
+  .donation-step {
+    padding: 30px 60px 40px;
+  }
+
+  .donation-form-title {
+    font-size: 36px;
+  }
+
+  .custom-select {
+    width: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .donation-step {
+    padding: 25px 30px 35px;
+  }
+
+  .donation-form-title {
+    font-size: 28px;
+  }
+
+  .amount-buttons {
+    gap: 10px;
+  }
+
+  .amount-btn {
+    min-width: 70px;
+    height: 45px;
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+
+  .other-amount-row,
+  .special-pet-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .other-amount-input,
+  .custom-select {
+    width: 100%;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-group.full-width {
+    grid-column: 1;
+  }
+
+  .footer-buttons {
+    flex-direction: column-reverse;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .next-btn,
+  .submit-btn,
+  .back-btn {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .donation-form-footer {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .donation-form-header {
+    padding: 30px 0;
+  }
+
+  .donation-form-title {
+    font-size: 22px;
+  }
+
+  .donation-step {
+    padding: 20px 20px 30px;
+  }
+
+  .donation-section-title {
+    font-size: 16px;
+  }
+
+  .donation-label,
+  .form-group label,
+  .checkbox-container {
+    font-size: 14px;
+  }
+
+  .amount-btn {
+    min-width: 60px;
+    height: 40px;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .other-amount-btn,
+  .special-pet-btn {
+    min-width: 140px;
+    height: 45px;
+    font-size: 12px;
+  }
+
+  .form-group input,
+  .other-amount-input,
+  .select-selected {
+    height: 45px;
+    font-size: 14px;
+  }
+
+  .next-btn,
+  .submit-btn,
+  .back-btn {
+    height: 45px;
+    font-size: 14px;
+  }
+}
