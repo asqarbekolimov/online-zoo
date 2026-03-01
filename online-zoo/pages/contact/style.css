@@ -1,13 +1,10 @@
 @import url("../../styles/main.css");
 @import url("../../pages/landing/style.css");
 
-/* ===== CONTACT PAGE STYLES ===== */
-
 .contact-main {
   background-color: var(--color-white);
 }
 
-/* Hero Section */
 .contact-hero {
   padding-top: 50px;
   max-width: 1440px;
@@ -33,7 +30,6 @@
   object-fit: cover;
 }
 
-/* Get In Touch Section */
 .get-in-touch {
   padding: 100px 0 150px;
   max-width: 1440px;
@@ -52,7 +48,6 @@
   align-items: start;
 }
 
-/* Contact Info */
 .contact-info {
   display: flex;
   flex-direction: column;
@@ -72,7 +67,6 @@
   line-height: 1.5;
 }
 
-/* Contact Form */
 .contact-form-wrapper {
   max-width: 680px;
 }
@@ -146,7 +140,6 @@
   height: 22px;
 }
 
-/* ===== RESPONSIVE ===== */
 @media (max-width: 1200px) {
   .contact-grid {
     grid-template-columns: 1fr;
