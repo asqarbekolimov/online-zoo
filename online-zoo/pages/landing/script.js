@@ -213,4 +213,67 @@ document.addEventListener("DOMContentLoaded", () => {
       selectSelected.classList.remove("select-arrow-active");
     });
   }
+
+  const testimonialContainers = document.querySelectorAll(
+    ".users_testimonials_container",
+  );
+  const testimonialPrev = document.getElementById("testimonialPrev");
+  const testimonialNext = document.getElementById("testimonialNext");
+  let currentSlide = 0;
+
+  function getCardWidth() {
+    const firstCard = document.querySelector(".users_testimonial_card");
+    if (!firstCard) return 545;
+    return firstCard.offsetWidth + 30;
+  }
+
+  function getCardsPerRow() {
+    if (testimonialContainers.length === 0) return 3;
+    return testimonialContainers[0].querySelectorAll(".users_testimonial_card")
+      .length;
+  }
+
+  function getCardsToShow() {
+    const inner = document.querySelector(".users_testimonials_inner");
+    if (!inner) return 3;
+    const containerWidth = inner.offsetWidth;
+    const cardWidth = getCardWidth();
+    return Math.max(1, Math.floor(containerWidth / cardWidth));
+  }
+
+  function updateTestimonialSlider() {
+    const cardsPerRow = getCardsPerRow();
+    const cardsToShow = getCardsToShow();
+    const maxSlide = Math.max(0, cardsPerRow - cardsToShow);
+    if (currentSlide > maxSlide) currentSlide = maxSlide;
+    const cardWidth = getCardWidth();
+    const offset = currentSlide * cardWidth;
+    testimonialContainers.forEach((container) => {
+      container.style.transform = `translateX(-${offset}px)`;
+      container.style.transition = "transform 0.3s ease";
+    });
+  }
+
+  if (testimonialPrev) {
+    testimonialPrev.addEventListener("click", () => {
+      if (currentSlide > 0) {
+        currentSlide--;
+        updateTestimonialSlider();
+      }
+    });
+  }
+
+  if (testimonialNext) {
+    testimonialNext.addEventListener("click", () => {
+      const cardsPerRow = getCardsPerRow();
+      const cardsToShow = getCardsToShow();
+      const maxSlide = Math.max(0, cardsPerRow - cardsToShow);
+      if (currentSlide < maxSlide) {
+        currentSlide++;
+        updateTestimonialSlider();
+      }
+    });
+  }
+
+  window.addEventListener("resize", updateTestimonialSlider);
 });
