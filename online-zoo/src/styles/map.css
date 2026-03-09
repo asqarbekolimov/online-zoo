@@ -1,0 +1,207 @@
+.map {
+  padding: 40px 0 150px;
+}
+
+.map .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 70px;
+}
+
+.map-text {
+  max-width: 601px;
+  width: 100%;
+  text-align: center;
+  color: var(--color-navy);
+}
+
+.map__container {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.map__image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.map__marker {
+  position: absolute;
+  cursor: pointer;
+  z-index: 10;
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
+}
+
+.map__marker:hover {
+  transform: scale(1.2);
+  z-index: 20;
+}
+
+.marker__pin {
+  width: 65px;
+  height: 72px;
+  background: linear-gradient(180deg, #f5a623 0%, #e8941a 100%);
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.35);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.marker__pin::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border-radius: 50% 50% 50% 0;
+  background: transparent;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.marker__pin img {
+  width: 28px;
+  height: 28px;
+  transform: rotate(45deg);
+  object-fit: contain;
+  filter: brightness(0) saturate(100%) invert(13%) sepia(25%) saturate(2500%)
+    hue-rotate(220deg) brightness(95%) contrast(95%);
+  transition: filter 0.3s ease;
+}
+
+.map__marker:hover .marker__pin {
+  background: linear-gradient(180deg, #ffffff 0%, #e8e8e8 100%);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.map__marker:hover .marker__pin::before {
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+.map__marker--eagle {
+  top: 38%;
+  left: 18%;
+}
+
+.map__marker--gorilla {
+  top: 50%;
+  left: 48%;
+}
+
+.map__marker--alligator {
+  top: 72%;
+  left: 53%;
+}
+
+.map__marker--lion {
+  top: 38%;
+  left: 55%;
+}
+
+.map__marker--tiger {
+  top: 45%;
+  left: 68%;
+}
+
+.map__marker--panda {
+  top: 35%;
+  left: 75%;
+}
+
+.map__marker--lemur {
+  top: 55%;
+  left: 78%;
+}
+
+.map__marker--coala {
+  top: 72%;
+  left: 82%;
+}
+
+@media (max-width: 1024px) {
+  .map {
+    padding: 30px 0 100px;
+  }
+
+  .map .container {
+    gap: 50px;
+  }
+
+  .marker__pin {
+    width: 40px;
+    height: 52px;
+  }
+
+  .marker__pin img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .map__marker:hover .marker__pin::before {
+    border-width: 2px;
+  }
+}
+
+@media (max-width: 768px) {
+  .map {
+    padding: 20px 0 80px;
+  }
+
+  .map .container {
+    gap: 30px;
+  }
+
+  .marker__pin {
+    width: 32px;
+    height: 42px;
+  }
+
+  .marker__pin img {
+    width: 18px;
+    height: 18px;
+  }
+
+  .marker__pin::before {
+    inset: 2px;
+  }
+
+  .map__marker:hover .marker__pin::before {
+    border-width: 2px;
+  }
+}
+
+@media (max-width: 480px) {
+  .map {
+    padding: 15px 0 60px;
+  }
+
+  .map .container {
+    gap: 20px;
+  }
+
+  .marker__pin {
+    width: 24px;
+    height: 32px;
+  }
+
+  .marker__pin img {
+    width: 13px;
+    height: 13px;
+  }
+
+  .marker__pin::before {
+    inset: 1px;
+  }
+
+  .map__marker:hover .marker__pin::before {
+    border-width: 1px;
+  }
+}
