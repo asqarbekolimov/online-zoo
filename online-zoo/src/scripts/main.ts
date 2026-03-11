@@ -5,5 +5,6 @@ import("../styles/map.css")
 import("../styles/zoos.css")
 
 import("./menu")
+import("./landing")
 
 document.addEventListener("DOMContentLoaded", () => {})
