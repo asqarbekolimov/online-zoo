@@ -1,5 +1,7 @@
 import getData from "../lib/api"
 import type { IPet } from "../types"
+import "./testimonial"
+import { updatePetsSlider } from "./pets-slider"
 
 const petsContainer = document.querySelector(".our-pets_slider_container")
 
@@ -86,4 +88,5 @@ function renderPets(pets: IPet[]) {
 const pets = await getPets()
 if (pets) {
   renderPets(pets)
+  updatePetsSlider()
 }

@@ -4,3 +4,12 @@ export interface IPet {
   commonName: string
   description: string
 }
+
+export interface ITestimonial {
+  id: number
+  city: string
+  month: string
+  year: string
+  text: string
+  name: string
+}
