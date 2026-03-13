@@ -6,5 +6,6 @@ import("../styles/zoos.css")
 
 import("./menu")
 import("./landing")
+import("./auth")
 
 document.addEventListener("DOMContentLoaded", () => {})
