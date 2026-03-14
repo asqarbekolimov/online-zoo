@@ -1,4 +1,19 @@
-const userAvatar = document.querySelector(".user__avatar") as HTMLElement | null
+import getData from "../lib/api"
+
+type UserData = {
+  name?: string
+  email?: string
+  login?: string
+  password?: string
+}
+
+const userAvatar = document.querySelector(
+  ".user__avatar",
+) as HTMLButtonElement | null
+const userAvatarName = document.querySelector(
+  ".user__avatar-name",
+) as HTMLElement | null
+const userMenu = document.querySelector(".user-menu") as HTMLElement | null
 
 const LOGIN_MODAL_ID = "auth-login-modal"
 const REGISTER_MODAL_ID = "auth-register-modal"
@@ -7,7 +22,8 @@ function validateName(value: string): string | null {
   const name = value.trim()
   if (name.length === 0) return "Name is required"
   if (name.length < 3) return "Name should be at least 3 characters long"
-  if (!/^[A-Za-z]+$/.test(name)) return "Only English alphabet letters are allowed"
+  if (!/^[A-Za-z]+$/.test(name))
+    return "Only English alphabet letters are allowed"
   return null
 }
 
@@ -16,19 +32,32 @@ function validateLogin(value: string): string | null {
   if (login.length === 0) return "Login is required"
   if (login.length < 3) return "Login should be at least 3 characters long"
   if (!/^[A-Za-z]/.test(login)) return "Login should start with a letter"
-  if (!/^[A-Za-z]+$/.test(login)) return "Only English alphabet letters are allowed"
+  if (!/^[A-Za-z]+$/.test(login))
+    return "Only English alphabet letters are allowed"
+  return null
+}
+
+function validateEmail(value: string): string | null {
+  const email = value.trim()
+  if (email.length === 0) return "Email is required"
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return "Enter a valid email"
   return null
 }
 
 function validatePassword(value: string): string | null {
   const password = value.trim()
   if (password.length === 0) return "Password is required"
-  if (password.length < 6) return "Password should be at least 6 characters long"
-  if (!/[^A-Za-z0-9]/.test(password)) return "Password should contain at least 1 special character"
+  if (password.length < 6)
+    return "Password should be at least 6 characters long"
+  if (!/[^A-Za-z0-9]/.test(password))
+    return "Password should contain at least 1 special character"
   return null
 }
 
-function validateConfirmPassword(passwordValue: string, confirmValue: string): string | null {
+function validateConfirmPassword(
+  passwordValue: string,
+  confirmValue: string,
+): string | null {
   const confirmError = validatePassword(confirmValue)
   if (confirmError) return confirmError
   if (passwordValue !== confirmValue) return "Passwords should match"
@@ -51,6 +80,30 @@ function clearInputError(input: HTMLInputElement) {
   input.classList.remove("auth-modal__input--invalid")
   field.classList.remove("auth-modal__field--invalid")
   if (error) error.textContent = ""
+}
+
+function setFormError(element: HTMLElement, message: string) {
+  element.textContent = message
+}
+
+function clearFormError(element: HTMLElement) {
+  element.textContent = ""
+}
+
+function startButtonLoading(button: HTMLButtonElement, text: string) {
+  button.disabled = true
+  button.classList.add("is-loading")
+  button.textContent = text
+}
+
+function stopButtonLoading(
+  button: HTMLButtonElement,
+  text: string,
+  disabled = false,
+) {
+  button.disabled = disabled
+  button.classList.remove("is-loading")
+  button.textContent = text
 }
 
 function createLoginModal() {
@@ -113,6 +166,12 @@ function createRegisterModal() {
           <p class="auth-modal__error" aria-live="polite"></p>
         </div>
         <div class="auth-modal__field">
+          <label class="auth-modal__label" for="authEmail">Email</label>
+          <input class="auth-modal__input" id="authEmail" name="email" type="email" placeholder="Enter email" autocomplete="email" />
+          <span class="auth-modal__error-icon" aria-hidden="true">!</span>
+          <p class="auth-modal__error" aria-live="polite"></p>
+        </div>
+        <div class="auth-modal__field">
           <label class="auth-modal__label" for="authLogin">Login</label>
           <input class="auth-modal__input" id="authLogin" name="login" type="text" placeholder="Enter login" autocomplete="username" />
           <span class="auth-modal__error-icon" aria-hidden="true">!</span>
@@ -130,6 +189,7 @@ function createRegisterModal() {
           <span class="auth-modal__error-icon" aria-hidden="true">!</span>
           <p class="auth-modal__error" aria-live="polite"></p>
         </div>
+        <p class="auth-modal__form-error" id="authRegisterFormError" aria-live="polite"></p>
         <button class="btn auth-modal__submit" id="authRegisterBtn" type="submit" disabled>Register</button>
       </form>
       <p class="auth-modal__switch">
@@ -158,31 +218,110 @@ function closeAllModals() {
   document.body.classList.remove("auth-modal-open")
 }
 
-if (userAvatar) {
+function getUserData() {
+  const userRaw = localStorage.getItem("online-zoo-user")
+  if (!userRaw) return null
+
+  try {
+    return JSON.parse(userRaw) as UserData
+  } catch {
+    return null
+  }
+}
+
+function openUserMenu() {
+  if (!userMenu || !userAvatar) return
+  userMenu.hidden = false
+  userAvatar.setAttribute("aria-expanded", "true")
+}
+
+function closeUserMenu() {
+  if (!userMenu || !userAvatar) return
+  userMenu.hidden = true
+  userAvatar.setAttribute("aria-expanded", "false")
+}
+
+function renderUserMenu() {
+  if (!userMenu || !userAvatarName) return
+
+  const user = getUserData()
+
+  if (user && user.name) {
+    userAvatarName.textContent = user.name
+    userMenu.innerHTML = `
+      <div class="user-menu__profile">
+        <div class="user-menu__title">Profile information</div>
+        <div class="user-menu__row"><span>Name</span><strong>${user.name}</strong></div>
+        <div class="user-menu__row"><span>Email</span><strong>${user.email || "No email"}</strong></div>
+      </div>
+      <button type="button" class="user-menu__action user-menu__action--danger" data-user-menu-action="signout">Sign Out</button>
+    `
+    return
+  }
+
+  userAvatarName.textContent = ""
+  userMenu.innerHTML = `
+    <div class="user-menu__guest">
+      <button type="button" class="user-menu__action" data-user-menu-action="login">Sign In</button>
+      <button type="button" class="user-menu__action" data-user-menu-action="register">Registration</button>
+    </div>
+  `
+}
+
+if (userAvatar && userMenu) {
   const loginModal = createLoginModal()
   const registerModal = createRegisterModal()
 
-  const loginForm = loginModal.querySelector("#authLoginForm") as HTMLFormElement
-  const loginInput = loginModal.querySelector("#authLoginOnly") as HTMLInputElement
-  const loginPasswordInput = loginModal.querySelector("#authPasswordOnly") as HTMLInputElement
-  const loginFormError = loginModal.querySelector("#authLoginFormError") as HTMLElement
+  const loginForm = loginModal.querySelector(
+    "#authLoginForm",
+  ) as HTMLFormElement
+  const loginInput = loginModal.querySelector(
+    "#authLoginOnly",
+  ) as HTMLInputElement
+  const loginPasswordInput = loginModal.querySelector(
+    "#authPasswordOnly",
+  ) as HTMLInputElement
+  const loginFormError = loginModal.querySelector(
+    "#authLoginFormError",
+  ) as HTMLElement
 
-  const registerForm = registerModal.querySelector("#authRegisterForm") as HTMLFormElement
+  const registerForm = registerModal.querySelector(
+    "#authRegisterForm",
+  ) as HTMLFormElement
   const nameInput = registerModal.querySelector("#authName") as HTMLInputElement
-  const registerLoginInput = registerModal.querySelector("#authLogin") as HTMLInputElement
-  const registerPasswordInput = registerModal.querySelector("#authPassword") as HTMLInputElement
-  const confirmPasswordInput = registerModal.querySelector("#authConfirmPassword") as HTMLInputElement
-  const registerButton = registerModal.querySelector("#authRegisterBtn") as HTMLButtonElement
+  const emailInput = registerModal.querySelector(
+    "#authEmail",
+  ) as HTMLInputElement
+  const registerLoginInput = registerModal.querySelector(
+    "#authLogin",
+  ) as HTMLInputElement
+  const registerPasswordInput = registerModal.querySelector(
+    "#authPassword",
+  ) as HTMLInputElement
+  const confirmPasswordInput = registerModal.querySelector(
+    "#authConfirmPassword",
+  ) as HTMLInputElement
+  const registerButton = registerModal.querySelector(
+    "#authRegisterBtn",
+  ) as HTMLButtonElement
+  const registerFormError = registerModal.querySelector(
+    "#authRegisterFormError",
+  ) as HTMLElement
+
+  renderUserMenu()
 
   function updateRegisterButton() {
     const nameError = validateName(nameInput.value)
+    const emailError = validateEmail(emailInput.value)
     const loginError = validateLogin(registerLoginInput.value)
     const passwordError = validatePassword(registerPasswordInput.value)
     const confirmError = validateConfirmPassword(
       registerPasswordInput.value,
       confirmPasswordInput.value,
     )
-    registerButton.disabled = Boolean(nameError || loginError || passwordError || confirmError)
+    registerButton.disabled = Boolean(
+      nameError || emailError || loginError || passwordError || confirmError,
+    )
   }
 
   loginInput.addEventListener("blur", () => {
@@ -192,7 +331,7 @@ if (userAvatar) {
 
   loginInput.addEventListener("focus", () => {
     clearInputError(loginInput)
-    loginFormError.textContent = ""
+    clearFormError(loginFormError)
   })
 
   loginPasswordInput.addEventListener("blur", () => {
@@ -202,7 +341,7 @@ if (userAvatar) {
 
   loginPasswordInput.addEventListener("focus", () => {
     clearInputError(loginPasswordInput)
-    loginFormError.textContent = ""
+    clearFormError(loginFormError)
   })
 
   nameInput.addEventListener("blur", () => {
@@ -218,6 +357,20 @@ if (userAvatar) {
 
   nameInput.addEventListener("input", updateRegisterButton)
 
+  emailInput.addEventListener("blur", () => {
+    const error = validateEmail(emailInput.value)
+    if (error) showInputError(emailInput, error)
+    updateRegisterButton()
+  })
+
+  emailInput.addEventListener("focus", () => {
+    clearInputError(emailInput)
+    clearFormError(registerFormError)
+    updateRegisterButton()
+  })
+
+  emailInput.addEventListener("input", updateRegisterButton)
+
   registerLoginInput.addEventListener("blur", () => {
     const error = validateLogin(registerLoginInput.value)
     if (error) showInputError(registerLoginInput, error)
@@ -226,6 +379,7 @@ if (userAvatar) {
 
   registerLoginInput.addEventListener("focus", () => {
     clearInputError(registerLoginInput)
+    clearFormError(registerFormError)
     updateRegisterButton()
   })
 
@@ -245,6 +399,7 @@ if (userAvatar) {
 
   registerPasswordInput.addEventListener("focus", () => {
     clearInputError(registerPasswordInput)
+    clearFormError(registerFormError)
     updateRegisterButton()
   })
 
@@ -272,25 +427,69 @@ if (userAvatar) {
 
   confirmPasswordInput.addEventListener("focus", () => {
     clearInputError(confirmPasswordInput)
+    clearFormError(registerFormError)
     updateRegisterButton()
   })
 
   confirmPasswordInput.addEventListener("input", updateRegisterButton)
 
-  userAvatar.addEventListener("click", () => {
-    closeAllModals()
-    openModal(loginModal)
+  userAvatar.addEventListener("click", (event) => {
+    event.stopPropagation()
+
+    if (userMenu.hidden) {
+      openUserMenu()
+    } else {
+      closeUserMenu()
+    }
   })
 
   document.addEventListener("click", (event) => {
     const target = event.target as HTMLElement
+
+    const clickedAvatar = target.closest(".user__avatar")
+    const clickedMenu = target.closest(".user-menu")
+
+    if (!clickedAvatar && !clickedMenu) {
+      closeUserMenu()
+    }
 
     if (target.closest("[data-auth-close='true']")) {
       closeAllModals()
       return
     }
 
-    const switchButton = target.closest("[data-auth-switch]") as HTMLElement | null
+    const userActionButton = target.closest(
+      "[data-user-menu-action]",
+    ) as HTMLElement | null
+
+    if (userActionButton) {
+      const action = userActionButton.getAttribute("data-user-menu-action")
+
+      if (action === "login") {
+        closeUserMenu()
+        closeAllModals()
+        openModal(loginModal)
+      }
+
+      if (action === "register") {
+        closeUserMenu()
+        closeAllModals()
+        openModal(registerModal)
+        updateRegisterButton()
+      }
+
+      if (action === "signout") {
+        localStorage.removeItem("online-zoo-user")
+        renderUserMenu()
+        closeUserMenu()
+      }
+
+      return
+    }
+
+    const switchButton = target.closest(
+      "[data-auth-switch]",
+    ) as HTMLElement | null
     if (!switchButton) return
 
     const switchTo = switchButton.getAttribute("data-auth-switch")
@@ -299,54 +498,74 @@ if (userAvatar) {
       closeAllModals()
       openModal(registerModal)
       updateRegisterButton()
+      closeUserMenu()
     }
 
     if (switchTo === "login") {
       closeAllModals()
       openModal(loginModal)
+      closeUserMenu()
     }
   })
 
-  loginForm.addEventListener("submit", (event) => {
+  loginForm.addEventListener("submit", async (event) => {
     event.preventDefault()
+    const loginButton = loginForm.querySelector(
+      ".auth-modal__submit",
+    ) as HTMLButtonElement
 
     const loginError = validateLogin(loginInput.value)
     const passwordError = validatePassword(loginPasswordInput.value)
 
     if (loginError) showInputError(loginInput, loginError)
     if (passwordError) showInputError(loginPasswordInput, passwordError)
-    loginFormError.textContent = ""
+    clearFormError(loginFormError)
 
     if (loginError || passwordError) return
 
-    const userRaw = localStorage.getItem("online-zoo-user")
-    if (!userRaw) {
-      loginFormError.textContent = "No account found. Please register first."
-      return
-    }
+    startButtonLoading(loginButton, "Loading...")
 
-    let user: { name: string; login: string; password: string } | null
     try {
-      user = JSON.parse(userRaw) as { name: string; login: string; password: string }
-    } catch {
-      user = null
-    }
+      const loginUser = await getData("auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          login: loginInput.value.trim(),
+          password: loginPasswordInput.value.trim(),
+        }),
+      })
 
-    if (!user || user.login !== loginInput.value.trim() || user.password !== loginPasswordInput.value.trim()) {
-      loginFormError.textContent = "Invalid login or password"
-      return
-    }
+      const user = loginUser?.data?.user || loginUser?.user || loginUser?.data
+      localStorage.setItem("online-zoo-user", JSON.stringify(user))
+      renderUserMenu()
 
-    closeAllModals()
-    loginForm.reset()
-    clearInputError(loginInput)
-    clearInputError(loginPasswordInput)
+      closeAllModals()
+      loginForm.reset()
+      clearInputError(loginInput)
+      clearInputError(loginPasswordInput)
+      stopButtonLoading(loginButton, "Login")
+    } catch (error) {
+      const status = (error as Error & { status?: number }).status
+
+      if (status === 401 || status === 404) {
+        setFormError(loginFormError, "Invalid login or password")
+      } else {
+        setFormError(loginFormError, "Something went wrong. Please try again.")
+      }
+
+      stopButtonLoading(loginButton, "Login")
+      console.error("Login error:", error)
+    }
   })
 
-  registerForm.addEventListener("submit", (event) => {
+  registerForm.addEventListener("submit", async (event) => {
     event.preventDefault()
+    clearFormError(registerFormError)
 
     const nameError = validateName(nameInput.value)
+    const emailError = validateEmail(emailInput.value)
     const loginError = validateLogin(registerLoginInput.value)
     const passwordError = validatePassword(registerPasswordInput.value)
     const confirmError = validateConfirmPassword(
@@ -355,29 +574,73 @@ if (userAvatar) {
     )
 
     if (nameError) showInputError(nameInput, nameError)
+    if (emailError) showInputError(emailInput, emailError)
     if (loginError) showInputError(registerLoginInput, loginError)
     if (passwordError) showInputError(registerPasswordInput, passwordError)
     if (confirmError) showInputError(confirmPasswordInput, confirmError)
 
     updateRegisterButton()
-    if (nameError || loginError || passwordError || confirmError) return
+    if (nameError || emailError || loginError || passwordError || confirmError)
+      return
 
-    localStorage.setItem(
-      "online-zoo-user",
-      JSON.stringify({
-        name: nameInput.value.trim(),
-        login: registerLoginInput.value.trim(),
-        password: registerPasswordInput.value.trim(),
-      }),
-    )
+    startButtonLoading(registerButton, "Loading...")
 
-    closeAllModals()
-    registerForm.reset()
-    clearInputError(nameInput)
-    clearInputError(registerLoginInput)
-    clearInputError(registerPasswordInput)
-    clearInputError(confirmPasswordInput)
-    updateRegisterButton()
+    try {
+      const registerUser = await getData("auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: nameInput.value.trim(),
+          email: emailInput.value.trim(),
+          login: registerLoginInput.value.trim(),
+          password: registerPasswordInput.value.trim(),
+        }),
+      })
+
+      if (registerUser.length > 0) {
+        showInputError(registerLoginInput, "Login is already taken")
+        stopButtonLoading(registerButton, "Register", true)
+        updateRegisterButton()
+        return
+      }
+
+      localStorage.setItem(
+        "online-zoo-user",
+        JSON.stringify(registerUser.data.user),
+      )
+      renderUserMenu()
+
+      closeAllModals()
+      registerForm.reset()
+      clearInputError(nameInput)
+      clearInputError(emailInput)
+      clearInputError(registerLoginInput)
+      clearInputError(registerPasswordInput)
+      clearInputError(confirmPasswordInput)
+      clearFormError(registerFormError)
+      stopButtonLoading(registerButton, "Register", true)
+      updateRegisterButton()
+    } catch (error) {
+      const status = (error as Error & { status?: number }).status
+
+      if (status === 409) {
+        setFormError(
+          registerFormError,
+          "This login or email is already registered.",
+        )
+      } else {
+        setFormError(
+          registerFormError,
+          "Something went wrong. Please try again.",
+        )
+      }
+
+      stopButtonLoading(registerButton, "Register", true)
+      updateRegisterButton()
+      console.error("Register error:", error)
+    }
   })
 
   document.addEventListener("keydown", (event) => {
