@@ -218,6 +218,10 @@ function closeAllModals() {
   document.body.classList.remove("auth-modal-open")
 }
 
+function redirectToLandingPage() {
+  window.location.href = "/index.html"
+}
+
 function getUserData() {
   const userRaw = localStorage.getItem("online-zoo-user")
   if (!userRaw) return null
@@ -546,6 +550,7 @@ if (userAvatar && userMenu) {
       clearInputError(loginInput)
       clearInputError(loginPasswordInput)
       stopButtonLoading(loginButton, "Login")
+      redirectToLandingPage()
     } catch (error) {
       const status = (error as Error & { status?: number }).status
 
@@ -622,6 +627,7 @@ if (userAvatar && userMenu) {
       clearFormError(registerFormError)
       stopButtonLoading(registerButton, "Register", true)
       updateRegisterButton()
+      redirectToLandingPage()
     } catch (error) {
       const status = (error as Error & { status?: number }).status
 

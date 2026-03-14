@@ -58,7 +58,33 @@
                 >Design</a
               >
             </li>
-            <li class="user__avatar">
+          </ul>
+
+          <ul class="socials">
+            <li>
+              <a href="#">
+                <img src="/assets/images/youtube.svg" alt="youtube" />
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <img src="/assets/images/instagram.svg" alt="instagram" />
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <img src="/assets/images/facebook.svg" alt="facebook" />
+              </a>
+            </li>
+          </ul>
+
+          <div class="header__account">
+            <button
+              class="user__avatar"
+              type="button"
+              aria-label="Open user menu"
+              aria-expanded="false"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -86,26 +112,11 @@
                   stroke-linejoin="round"
                 ></path>
               </svg>
-            </li>
-          </ul>
+              <span class="user__avatar-name"></span>
+            </button>
 
-          <ul class="socials">
-            <li>
-              <a href="#">
-                <img src="/assets/images/youtube.svg" alt="youtube" />
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <img src="/assets/images/instagram.svg" alt="instagram" />
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <img src="/assets/images/facebook.svg" alt="facebook" />
-              </a>
-            </li>
-          </ul>
+            <div class="user-menu" hidden></div>
+          </div>
         </nav>
 
         <button class="burger-menu" aria-label="Toggle menu">
