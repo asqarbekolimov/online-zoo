@@ -7,5 +7,6 @@ import("../styles/zoos.css")
 import("./menu")
 import("./landing")
 import("./auth")
+import("./donation-popup")
 
 document.addEventListener("DOMContentLoaded", () => {})
