@@ -2,6 +2,7 @@
 @import url("./map.css");
 @import url("./zoos.css");
 @import url("./contact.css");
+@import url("./theme.css");
 
 :root {
   --color-black: #000000;
@@ -52,6 +53,10 @@ body {
   background-color: var(--color-white);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.root {
+  isolation: isolate;
 }
 
 img {
