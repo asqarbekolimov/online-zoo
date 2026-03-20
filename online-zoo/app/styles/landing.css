@@ -117,6 +117,8 @@
 }
 
 .donation_amount {
+  display: flex;
+  align-items: center;
   border: 1px solid var(--color-white);
   border-radius: 5px;
 }
@@ -126,8 +128,6 @@
   margin: 0 14px;
   outline: none;
   border: none;
-  width: 210px;
-  height: 60px;
   cursor: pointer;
   color: var(--color-white);
   font-size: 18px;

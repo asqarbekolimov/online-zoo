@@ -1,3 +1,5 @@
+import CustomButton from "../ui/button";
+
 interface Props {
   title: string;
   description: string;
@@ -17,7 +19,7 @@ const YourDonation = ({ title, description }: Props) => {
             <div className="text-subheader">Quick Donate</div>
             <div className="donation_amount">
               <span className="amount-input">$ Donation Amount</span>
-              <button className="text-button btn" id="quickDonateBtn">
+              <CustomButton variant="orange">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="26"
@@ -32,7 +34,7 @@ const YourDonation = ({ title, description }: Props) => {
                     fill="white"
                   />
                 </svg>
-              </button>
+              </CustomButton>
             </div>
           </div>
         </div>

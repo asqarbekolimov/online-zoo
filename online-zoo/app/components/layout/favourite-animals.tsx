@@ -1,3 +1,5 @@
+import CustomButton from "../ui/button";
+
 const FavouriteAnimals = () => {
   return (
     <>
@@ -10,7 +12,7 @@ const FavouriteAnimals = () => {
                 Explore the exciting and mysterious world of wild animals in a
                 natural setting without leaving your home.
               </p>
-              <button className="text-button btn">VIEW LIVE CAM</button>
+              <CustomButton variant="orange">VIEW LIVE CAM</CustomButton>
             </div>
           </div>
         </div>

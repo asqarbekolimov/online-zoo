@@ -2,6 +2,51 @@ import * as React from "react";
 import { Button } from "@base-ui/react/button";
 import styles from "./index.module.css";
 
-export default function ExampleButton() {
-  return <Button className={styles.Button}>Submit</Button>;
+type ButtonVariant =
+  | "orange"
+  | "teal"
+  | "lightTeal"
+  | "outlineWhite"
+  | "outlineTeal"
+  | "outlineNavy"
+  | "darkNavy"
+  | "ghostOrange";
+
+interface CustomButtonProps extends React.PropsWithChildren {
+  variant?: ButtonVariant;
+  disabled?: boolean;
+  className?: string;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
+const getVariantClass = (variant: ButtonVariant = "orange") => {
+  const variantMap: Record<ButtonVariant, string> = {
+    orange: styles.orange,
+    teal: styles.teal,
+    lightTeal: styles.lightTeal,
+    outlineWhite: styles.outlineWhite,
+    outlineTeal: styles.outlineTeal,
+    outlineNavy: styles.outlineNavy,
+    darkNavy: styles.darkNavy,
+    ghostOrange: styles.ghostOrange,
+  };
+  return variantMap[variant] || variantMap.orange;
+};
+
+export default function CustomButton({
+  children,
+  variant = "orange",
+  disabled = false,
+  className = "",
+  onClick,
+}: CustomButtonProps) {
+  const baseClasses = styles.Button;
+  const variantClass = getVariantClass(variant);
+  const combinedClasses = `${baseClasses} ${variantClass} ${className}`.trim();
+
+  return (
+    <Button className={combinedClasses} disabled={disabled} onClick={onClick}>
+      {children}
+    </Button>
+  );
 }

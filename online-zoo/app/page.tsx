@@ -4,8 +4,8 @@ import {
   HowItWorks,
   OurPets,
   PayAndFeed,
+  QuickDonation,
   UsersFeedbacks,
-  YourDonation,
 } from "@/components/layout";
 
 const HomePage = () => {
@@ -14,7 +14,7 @@ const HomePage = () => {
       <main>
         <FavouriteAnimals />
         <HowItWorks />
-        <YourDonation
+        <QuickDonation
           title="Your donation makes a difference!"
           description="The Online Zoo's animal webcams are some of the most famous
               on the internet. Tune in to watch your favourite animals — live,
