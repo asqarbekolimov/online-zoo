@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Montserrat, Montserrat_Alternates } from "next/font/google";
 import "./styles/globals.css";
-import Navbar from "@/components/layout/navbar";
+import { Footer, Navbar } from "@/components/layout";
 
 const montserrat = Montserrat({
   variable: "--font-primary",
@@ -32,6 +32,7 @@ export default function RootLayout({
       >
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

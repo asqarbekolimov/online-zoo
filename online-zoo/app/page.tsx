@@ -1,11 +1,31 @@
-import React from "react";
-import ExampleButton from "./components/ui/button";
+import {
+  CareAnimals,
+  FavouriteAnimals,
+  HowItWorks,
+  OurPets,
+  PayAndFeed,
+  UsersFeedbacks,
+  YourDonation,
+} from "@/components/layout";
 
 const HomePage = () => {
   return (
-    <div>
-      <ExampleButton />
-    </div>
+    <>
+      <main>
+        <FavouriteAnimals />
+        <HowItWorks />
+        <YourDonation
+          title="Your donation makes a difference!"
+          description="The Online Zoo's animal webcams are some of the most famous
+              on the internet. Tune in to watch your favourite animals — live,
+              24/7!"
+        />
+        <OurPets />
+        <PayAndFeed />
+        <UsersFeedbacks />
+        <CareAnimals />
+      </main>
+    </>
   );
 };
 
