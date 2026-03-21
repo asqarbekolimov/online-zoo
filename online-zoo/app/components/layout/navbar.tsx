@@ -1,8 +1,19 @@
+"use client";
+
 import Link from "next/link";
-import React from "react";
 import { Icons } from "@/components/icons";
+import { MenuItems, SocialLinks } from "@/lib/constants";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 const Navbar = () => {
+  const params = usePathname();
+  const [isActiveMenu, setIsActiveMenu] = useState<boolean>(false);
+
+  const toggleMenu = () => {
+    setIsActiveMenu((prev) => !prev);
+  };
+
   return (
     <>
       <header>
@@ -17,55 +28,27 @@ const Navbar = () => {
             </span>
           </Link>
 
-          <nav className="navbar">
+          <nav className={`navbar ${isActiveMenu && "active"}`}>
             <ul className="nav_items">
-              <li>
-                <a href="#" className="nav-link nav-link--active">
-                  About
-                </a>
-              </li>
-              <li>
-                <a href="/pages/map.html" className="nav-link">
-                  Map
-                </a>
-              </li>
-              <li>
-                <a href="/pages/zoo/panda.html" className="nav-link">
-                  Zoos
-                </a>
-              </li>
-              <li>
-                <a href="/pages/contact.html" className="nav-link">
-                  Contact us
-                </a>
-              </li>
-              <li>
-                <Link
-                  href="https://www.figma.com/file/lnK11foY8Aoa6oOlDXovVN/Online-ZOO-Project"
-                  className="nav-link"
-                  target="_blank"
-                >
-                  Design
-                </Link>
-              </li>
+              {MenuItems.map((item) => (
+                <li key={item.path}>
+                  <Link
+                    href={item.path}
+                    className={`nav-link ${params === item.path && "nav-link--active"}`}
+                    onClick={toggleMenu}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
 
             <ul className="socials">
-              <li>
-                <a href="#">
-                  <Icons.youTubeLogo />
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <Icons.instagramLogo />
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <Icons.facebookLogo />
-                </a>
-              </li>
+              {SocialLinks.map((link) => (
+                <li key={link.link}>
+                  <Link href={link.link}>{link.icon}</Link>
+                </li>
+              ))}
             </ul>
 
             <div className="header__account">
@@ -83,7 +66,11 @@ const Navbar = () => {
             </div>
           </nav>
 
-          <button className="burger-menu" aria-label="Toggle menu">
+          <button
+            className={`burger-menu ${isActiveMenu && "active"}`}
+            aria-label="Toggle menu"
+            onClick={toggleMenu}
+          >
             <span className="burger-line"></span>
             <span className="burger-line"></span>
             <span className="burger-line"></span>

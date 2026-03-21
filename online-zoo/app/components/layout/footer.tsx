@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Icons } from "@/components/icons";
 import CustomButton from "../ui/button";
+import { MenuItems, SocialLinks } from "@/lib/constants";
 
 const Footer = () => {
   return (
@@ -15,18 +16,13 @@ const Footer = () => {
             </div>
 
             <ul className="footer_menu-item">
-              <li>
-                <Link href="/">About </Link>
-              </li>
-              <li>
-                <Link href="/map">map </Link>
-              </li>
-              <li>
-                <Link href="/zoo">zoos </Link>
-              </li>
-              <li>
-                <Link href="/contact">contact us </Link>
-              </li>
+              {MenuItems.map((item) => (
+                <li key={item.path}>
+                  <Link href={item.path} className="link">
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
 
             <CustomButton variant="outlineWhite">
@@ -44,21 +40,11 @@ const Footer = () => {
               <li className="text-body">© RSSchool</li>
             </ul>
             <ul className="socials">
-              <li>
-                <Link href="#">
-                  <Icons.youTubeLogo />
-                </Link>
-              </li>
-              <li>
-                <Link href="#">
-                  <Icons.instagramLogo />
-                </Link>
-              </li>
-              <li>
-                <Link href="#">
-                  <Icons.facebookLogo />
-                </Link>
-              </li>
+              {SocialLinks.map((link) => (
+                <li key={link.link}>
+                  <Link href={link.link}>{link.icon}</Link>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

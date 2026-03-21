@@ -1,3 +1,4 @@
+import { Icons } from "../icons";
 import CustomButton from "../ui/button";
 
 const FavouriteAnimals = () => {
@@ -12,7 +13,9 @@ const FavouriteAnimals = () => {
                 Explore the exciting and mysterious world of wild animals in a
                 natural setting without leaving your home.
               </p>
-              <CustomButton variant="orange">VIEW LIVE CAM</CustomButton>
+              <CustomButton variant="orange">
+                VIEW LIVE CAM <Icons.ArrowRight />
+              </CustomButton>
             </div>
           </div>
         </div>
