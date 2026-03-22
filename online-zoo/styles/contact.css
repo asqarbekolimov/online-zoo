@@ -13,18 +13,13 @@
 }
 
 .hero-image {
+  position: relative;
   width: 100%;
   max-width: 1400px;
+  height: 600px;
   margin: 0 auto;
   border-radius: 5px;
   overflow: hidden;
-}
-
-.hero-image img {
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
 }
 
 .get-in-touch {
