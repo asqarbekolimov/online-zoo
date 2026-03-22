@@ -1,3 +1,5 @@
+import { WorldMap } from "@/components/layout";
+
 const MapPage = () => {
   return (
     <main>
@@ -6,6 +8,7 @@ const MapPage = () => {
           <div className="map-text">
             <h2 className="heading-2">find where are the animals live</h2>
           </div>
+          <WorldMap />
         </div>
       </section>
     </main>

@@ -1,5 +1,5 @@
 .map {
-  padding: 40px 0 150px;
+  padding: 40px 0 0px;
 }
 
 .map .container {
@@ -37,14 +37,9 @@
     filter 0.3s ease;
 }
 
-.map__marker:hover {
-  transform: scale(1.2);
-  z-index: 20;
-}
-
 .marker__pin {
-  width: 65px;
-  height: 72px;
+  width: 61px;
+  height: 62px;
   background: linear-gradient(180deg, #f5a623 0%, #e8941a 100%);
   border-radius: 50% 50% 50% 0;
   transform: rotate(-45deg);
@@ -66,9 +61,9 @@
   transition: all 0.3s ease;
 }
 
-.marker__pin img {
-  width: 28px;
-  height: 28px;
+.marker__pin svg {
+  width: 42px;
+  height: 42px;
   transform: rotate(45deg);
   object-fit: contain;
   filter: brightness(0) saturate(100%) invert(13%) sepia(25%) saturate(2500%)

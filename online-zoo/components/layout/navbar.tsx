@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Icons } from "@/components/icons";
-import { MenuItems, SocialLinks } from "@/lib/constants";
+import { MenuItems, SocialLinks } from "../../lib/constants";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 

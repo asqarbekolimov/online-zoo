@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Icons } from "@/components/icons";
 import CustomButton from "../ui/button";
-import { MenuItems, SocialLinks } from "@/lib/constants";
+import { MenuItems, SocialLinks } from "../../lib/constants";
 
 const Footer = () => {
   return (
