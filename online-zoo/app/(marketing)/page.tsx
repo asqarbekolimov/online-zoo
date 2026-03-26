@@ -7,8 +7,13 @@ import {
   QuickDonation,
   UsersFeedbacks,
 } from "@/components/layout";
+import { getFeedbacks, getPets } from "@/lib/api";
+import { Suspense } from "react";
 
-const HomePage = () => {
+const HomePage = async () => {
+  const pets = await getPets();
+  const feedbacks = await getFeedbacks();
+
   return (
     <>
       <main>
@@ -20,9 +25,13 @@ const HomePage = () => {
               on the internet. Tune in to watch your favourite animals — live,
               24/7!"
         />
-        <OurPets />
+        <Suspense fallback={<p>Loading...</p>}>
+          <OurPets pets={pets.data} />
+        </Suspense>
         <PayAndFeed />
-        <UsersFeedbacks />
+        <Suspense fallback={<p>Loading...</p>}>
+          <UsersFeedbacks feedbacks={feedbacks.data} />
+        </Suspense>
         <CareAnimals />
       </main>
     </>

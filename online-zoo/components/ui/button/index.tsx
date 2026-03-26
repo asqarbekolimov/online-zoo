@@ -1,5 +1,4 @@
 import * as React from "react";
-import { Button } from "@base-ui/react/button";
 import styles from "./index.module.css";
 
 type ButtonVariant =
@@ -45,8 +44,8 @@ export default function CustomButton({
   const combinedClasses = `${baseClasses} ${variantClass} ${className}`.trim();
 
   return (
-    <Button className={combinedClasses} disabled={disabled} onClick={onClick}>
+    <button className={combinedClasses} disabled={disabled} onClick={onClick}>
       {children}
-    </Button>
+    </button>
   );
 }

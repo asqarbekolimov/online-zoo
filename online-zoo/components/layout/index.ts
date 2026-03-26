@@ -9,3 +9,5 @@ export { default as CareAnimals } from "./care-animals";
 export { default as Footer } from "./footer";
 export { default as WorldMap } from "./world-map";
 export { default as ContactForm } from "./contact-form";
+export { default as AnimalsSidebar } from "./animals-sidebar";
+export { default as UserAvatar } from "./user-avatar";

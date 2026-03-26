@@ -1,7 +1,37 @@
+"use client";
+
+import { IFeedback } from "@/types";
 import { Icons } from "../icons";
 import CustomButton from "../ui/button";
+import { useRef, useState } from "react";
 
-const UsersFeedbacks = () => {
+interface UsersFeedbacksProps {
+  feedbacks: IFeedback[];
+}
+
+const UsersFeedbacks = ({ feedbacks }: UsersFeedbacksProps) => {
+  const [moved, setMoved] = useState<boolean>(false);
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const handleClick = (direction: "left" | "right") => {
+    setMoved(true);
+
+    if (carouselRef.current) {
+      const { scrollLeft, clientWidth } = carouselRef.current;
+      console.log(clientWidth);
+
+      const scrollTo =
+        direction === "left"
+          ? scrollLeft - clientWidth
+          : scrollLeft + clientWidth;
+
+      carouselRef.current.scrollTo({ left: scrollTo, behavior: "smooth" });
+      if (direction === "left" && scrollTo === 0) {
+        setMoved(false);
+      }
+    }
+  };
+
   return (
     <>
       <section className="users-feedbacks">
@@ -17,13 +47,43 @@ const UsersFeedbacks = () => {
 
           <div className="users_testimonials">
             <div className="users_testimonials_inner">
-              <div className="users_testimonials_container"></div>
+              <div className="users_testimonials_container" ref={carouselRef}>
+                {!feedbacks && (
+                  <>
+                    <div className="testimonials-error">
+                      <p>Something went wrong. Please, refresh the page</p>
+                    </div>
+                  </>
+                )}
+                {feedbacks &&
+                  feedbacks.map((feedback: IFeedback) => (
+                    <div key={feedback.id} className="users_testimonial_card">
+                      <div className="quote_icon">
+                        <span className="quote">“</span>
+                      </div>
+                      <div className="text-subheader">
+                        {feedback.city}, {feedback.month} ${feedback.year}
+                      </div>
+                      <p className="text-body">
+                        {feedback.text.slice(0, 220)}...
+                      </p>
+                      <div className="text-button">{feedback.name}</div>
+                    </div>
+                  ))}
+              </div>
 
               <div className="testimonials_controllers">
-                <CustomButton variant="outlineWhite">
+                <CustomButton
+                  variant="outlineWhite"
+                  onClick={() => handleClick("left")}
+                  disabled={!moved}
+                >
                   <Icons.ArrowLeft />
                 </CustomButton>
-                <CustomButton variant="outlineWhite">
+                <CustomButton
+                  variant="outlineWhite"
+                  onClick={() => handleClick("right")}
+                >
                   <Icons.ArrowRight />
                 </CustomButton>
               </div>
