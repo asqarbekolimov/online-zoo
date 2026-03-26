@@ -5,6 +5,7 @@ import { Icons } from "@/components/icons";
 import { MenuItems, SocialLinks } from "../../lib/constants";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import UserAvatar from "./user-avatar";
 
 const Navbar = () => {
   const params = usePathname();
@@ -51,19 +52,7 @@ const Navbar = () => {
               ))}
             </ul>
 
-            <div className="header__account">
-              <button
-                className="user__avatar"
-                type="button"
-                aria-label="Open user menu"
-                aria-expanded="false"
-              >
-                <Icons.userAvatar />
-                <span className="user__avatar-name"></span>
-              </button>
-
-              <div className="user-menu" hidden></div>
-            </div>
+            <UserAvatar />
           </nav>
 
           <button
