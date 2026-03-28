@@ -19,16 +19,10 @@ const UserAvatar = () => {
       <div className="header__account">
         <Dialog.Root open={open} onOpenChange={setOpen}>
           <Dialog.Trigger onClick={toggleDialog}>
-            <button
-              className="user__avatar"
-              type="button"
-              aria-label="Open user menu"
-              aria-expanded="false"
-              onClick={toggleDialog}
-            >
+            <div className="user__avatar" onClick={toggleDialog}>
               <Icons.userAvatar />
               <span className="user__avatar-name"></span>
-            </button>
+            </div>
           </Dialog.Trigger>
 
           <Dialog.Portal>
@@ -39,12 +33,12 @@ const UserAvatar = () => {
                 Please, sign in to access your account or create a new one if
                 you do&apos;t have it yet.
               </Dialog.Description>
-              <Link href="/sign-in">
+              <Link href="/sign-in" onClick={toggleDialog}>
                 <CustomButton variant="teal" className={styles.CustomButton}>
                   Sign In
                 </CustomButton>
               </Link>
-              <Link href="/create-account">
+              <Link href="/create-account" onClick={toggleDialog}>
                 <CustomButton variant="teal" className={styles.CustomButton}>
                   Create Account
                 </CustomButton>
