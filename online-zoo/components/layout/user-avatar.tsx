@@ -38,7 +38,7 @@ const UserAvatar = () => {
                   Sign In
                 </CustomButton>
               </Link>
-              <Link href="/create-account" onClick={toggleDialog}>
+              <Link href="/sign-up" onClick={toggleDialog}>
                 <CustomButton variant="teal" className={styles.CustomButton}>
                   Create Account
                 </CustomButton>

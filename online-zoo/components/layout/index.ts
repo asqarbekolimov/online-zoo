@@ -11,3 +11,5 @@ export { default as WorldMap } from "./world-map";
 export { default as ContactForm } from "./contact-form";
 export { default as AnimalsSidebar } from "./animals-sidebar";
 export { default as UserAvatar } from "./user-avatar";
+export { default as SignInForm } from "./sign-in-form";
+export { default as SignUpForm } from "./sign-up-form";
