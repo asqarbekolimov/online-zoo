@@ -1,4 +1,11 @@
+import { Metadata } from "next";
 import { WorldMap } from "@/components/layout";
+
+export const metadata: Metadata = {
+  title: "Online Zoo - Map",
+  description:
+    "Explore the wonders of the animal kingdom from the comfort of your home with Online Zoo. Discover fascinating facts, watch live streams, and support wildlife conservation efforts worldwide.",
+};
 
 const MapPage = () => {
   return (

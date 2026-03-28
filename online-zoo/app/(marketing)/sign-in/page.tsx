@@ -1,4 +1,11 @@
 import { SignInForm } from "@/components/layout";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Online Zoo - Sign In",
+  description:
+    "Explore the wonders of the animal kingdom from the comfort of your home with Online Zoo. Discover fascinating facts, watch live streams, and support wildlife conservation efforts worldwide.",
+};
 
 const SignInPage = () => {
   return (
