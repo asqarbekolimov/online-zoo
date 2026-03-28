@@ -17,7 +17,24 @@
     linear-gradient(181deg, #fff 0.2%, rgba(255, 255, 255, 0) 5.62%),
     linear-gradient(220deg, #fff 0.49%, rgba(255, 255, 255, 0) 6.78%),
     linear-gradient(142deg, #fff 13.5%, rgba(246, 246, 246, 0) 22.24%),
-    url("/assets/images/hero-bg.png") lightgray 50% / cover no-repeat;
+    url("/assets/images/hero-bg.webp") lightgray 50% / cover no-repeat;
+}
+
+@supports not (background-image: url("/assets/images/hero-bg.webp")) {
+  .hero_bg {
+    background-image:
+      linear-gradient(
+        106deg,
+        #fff 18.05%,
+        rgba(255, 255, 255, 0.65) 35.48%,
+        rgba(255, 255, 255, 0) 45.95%
+      ),
+      linear-gradient(268deg, #fff 2.85%, rgba(255, 255, 255, 0) 6.99%),
+      linear-gradient(181deg, #fff 0.2%, rgba(255, 255, 255, 0) 5.62%),
+      linear-gradient(220deg, #fff 0.49%, rgba(255, 255, 255, 0) 6.78%),
+      linear-gradient(142deg, #fff 13.5%, rgba(246, 246, 246, 0) 22.24%),
+      url("/assets/images/hero-bg.png");
+  }
 }
 
 .hero_container {
@@ -841,7 +858,20 @@
         rgba(255, 255, 255, 0.8) 40%,
         rgba(255, 255, 255, 0) 60%
       ),
-      url("/assets/images/hero-bg.png") lightgray center / cover no-repeat;
+      url("/assets/images/hero-bg.webp") lightgray center / cover no-repeat;
+  }
+
+  @supports not (background-image: url("/assets/images/hero-bg.webp")) {
+    .hero_bg {
+      background-image:
+        linear-gradient(
+          180deg,
+          #fff 0%,
+          rgba(255, 255, 255, 0.8) 40%,
+          rgba(255, 255, 255, 0) 60%
+        ),
+        url("/assets/images/hero-bg.png");
+    }
   }
 
   .hero_container {

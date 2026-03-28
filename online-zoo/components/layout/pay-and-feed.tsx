@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Icons } from "../icons";
 import CustomButton from "../ui/button";
 
@@ -14,7 +15,12 @@ const PayAndFeed = () => {
               <div className="line"></div>
             </div>
             <div className="pay-and-feed_info">
-              <img src="/assets/images/pay-1.png" alt="pay-1" />
+              <Image
+                src="/assets/images/pay-1.png"
+                alt="pay-1"
+                width={560}
+                height={365}
+              />
 
               <div className="pay-and-feed_text">
                 <svg
@@ -52,7 +58,12 @@ const PayAndFeed = () => {
               <div className="line"></div>
             </div>
             <div className="pay-and-feed_info">
-              <img src="/assets/images/pay-2.png" alt="pay-2" />
+              <Image
+                src="/assets/images/pay-2.png"
+                alt="pay-2"
+                width={560}
+                height={365}
+              />
 
               <div className="pay-and-feed_text">
                 <svg
@@ -86,7 +97,12 @@ const PayAndFeed = () => {
               <div className="line"></div>
             </div>
             <div className="pay-and-feed_info">
-              <img src="/assets/images/pay-3.png" alt="pay-3" />
+              <Image
+                src="/assets/images/pay-3.png"
+                alt="pay-3"
+                width={560}
+                height={365}
+              />
 
               <div className="pay-and-feed_text">
                 <svg

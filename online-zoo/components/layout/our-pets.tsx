@@ -4,6 +4,7 @@ import { IPet } from "@/types";
 import { Icons } from "../icons";
 import CustomButton from "../ui/button";
 import { useRef, useState } from "react";
+import Image from "next/image";
 
 interface OurPetsProps {
   pets: IPet[];
@@ -73,10 +74,12 @@ const OurPets = ({ pets }: OurPetsProps) => {
                       <div className="animal_name">
                         <span className="subheader">{pet.name}</span>
                       </div>
-                      <img
+                      <Image
                         className="card_img"
                         src={`/assets/images/card/${pet.id}.png`}
                         alt={pet.name}
+                        width={300}
+                        height={300}
                       />
                     </div>
                     <div className="card_body">

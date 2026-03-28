@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const HowItWorks = () => {
   return (
     <>
@@ -16,17 +18,21 @@ const HowItWorks = () => {
                 cameras, so please check back if you don&apos;t see anything.
               </p>
             </div>
-            <img
+            <Image
               className="wellcome-zoo_img"
               src="/assets/images/wellcome-img.png"
               alt="wellcome-zoo"
+              width={400}
+              height={400}
             />
           </div>
           <div className="wellcome-zoo">
-            <img
+            <Image
               className="wellcome-zoo_img"
               src="/assets/images/we-work.png"
               alt="we-work"
+              width={400}
+              height={400}
             />
             <div className="wellcome-zoo_info">
               <h2 className="heading-2">How we work</h2>

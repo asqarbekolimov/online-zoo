@@ -28,14 +28,17 @@ export const SocialLinks = [
   {
     icon: <Icons.youTubeLogo />,
     link: "https://www.youtube.com/",
+    name: "YouTube",
   },
   {
     icon: <Icons.instagramLogo />,
     link: "https://www.instagram.com/",
+    name: "Instagram",
   },
   {
     icon: <Icons.facebookLogo />,
     link: "https://www.facebook.com/",
+    name: "Facebook",
   },
 ];
 

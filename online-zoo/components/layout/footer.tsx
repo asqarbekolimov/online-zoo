@@ -42,7 +42,9 @@ const Footer = () => {
             <ul className="socials">
               {SocialLinks.map((link) => (
                 <li key={link.link}>
-                  <Link href={link.link}>{link.icon}</Link>
+                  <Link href={link.link} aria-label={link.name}>
+                    {link.icon}
+                  </Link>
                 </li>
               ))}
             </ul>
