@@ -6,10 +6,13 @@ import CustomButton from "../ui/button";
 import { useForm } from "react-hook-form";
 import { LoginFormData, loginSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const SignInForm = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -20,6 +23,7 @@ const SignInForm = () => {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
+      toast.loading("Signing in...");
       const res = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         body: JSON.stringify(data),
@@ -27,7 +31,18 @@ const SignInForm = () => {
 
       const result = await res.json();
 
-      console.log(result);
+      if (!res.ok) {
+        toast.dismiss();
+        toast.error(result.error, { removeDelay: 500 });
+        return;
+      }
+
+      toast.dismiss();
+      toast.success("Successfully signed in!", { removeDelay: 500 });
+      if (result) {
+        localStorage.setItem("user", JSON.stringify(result.data));
+      }
+      router.push("/");
     } catch (error) {
       console.error(error);
     }
