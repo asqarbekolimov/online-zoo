@@ -1,41 +1,81 @@
+"use client";
+
 import Link from "next/link";
 import { Icons } from "../icons";
 import CustomButton from "../ui/button";
+import { useForm } from "react-hook-form";
+import { LoginFormData, loginSchema } from "@/lib/validation";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const SignInForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema),
+  });
+
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      const res = await fetch(`${API_URL}/auth/login`, {
+        method: "POST",
+        body: JSON.stringify(data),
+      });
+
+      const result = await res.json();
+
+      console.log(result);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <div className="signin-form-wrapper">
-        <form className="signin-form">
-          <div className="form-group">
-            <label htmlFor="name">
+        <form onSubmit={handleSubmit(onSubmit)} className="signin-form">
+          <div className={`form-group ${errors.login ? "error" : ""}`}>
+            <label htmlFor="login">
               <span className="required">*</span> Login
             </label>
             <input
+              {...register("login")}
               type="text"
-              name="name"
+              name="login"
               placeholder="Enter your login"
-              required
-              autoComplete="username"
+              className={errors.login ? "error" : ""}
             />
+            {errors.login && <p className="error">{errors.login.message}</p>}
           </div>
 
-          <div className="form-group">
+          <div className={`form-group ${errors.password ? "error" : ""}`}>
             <label htmlFor="password">
               <span className="required">*</span> Password
             </label>
             <input
+              {...register("password")}
               type="password"
               name="password"
               placeholder="Enter your password"
-              required
-              autoComplete="current-password"
+              className={errors.password ? "error" : ""}
             />
+            {errors.password && (
+              <p className="error">{errors.password.message}</p>
+            )}
           </div>
 
-          <CustomButton className="btn submit-btn">
-            <span className="text-button">Sign In</span>
-            <Icons.ArrowRight className="icon-button" />
+          <CustomButton disabled={isSubmitting} className="btn submit-btn">
+            {isSubmitting ? (
+              "Loading..."
+            ) : (
+              <>
+                <span className="text-button">Sign In</span>
+                <Icons.ArrowRight className="icon-button" />
+              </>
+            )}
           </CustomButton>
         </form>
         <p className="form-info">

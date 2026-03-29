@@ -37,6 +37,20 @@
   width: 100%;
 }
 
+.signin-form .form-group input.error {
+  border-color: red !important;
+  border-width: 2px;
+  color: black;
+}
+
+.signin-form .form-group .error {
+  color: red;
+}
+
+.signin-form .form-group.error .required {
+  color: red;
+}
+
 .form-info {
   margin-top: 15px;
 }

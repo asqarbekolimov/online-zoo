@@ -1,72 +1,129 @@
+"use client";
+
 import Link from "next/link";
 import { Icons } from "../icons";
 import CustomButton from "../ui/button";
+import { useForm } from "react-hook-form";
+import { RegisterFormData, registerSchema } from "@/lib/validation";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const SignUpForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema),
+  });
+
+  const onSubmit = async (data: RegisterFormData) => {
+    try {
+      const res = await fetch(`${API_URL}/auth/register`, {
+        method: "POST",
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          login: data.login,
+          password: data.password,
+        }),
+      });
+
+      const result = await res.json();
+
+      console.log(result);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className="signin-form-wrapper">
-        <form className="signin-form">
-          <div className="form-group">
+        <form onSubmit={handleSubmit(onSubmit)} className="signin-form">
+          <div className={`form-group ${errors.name ? "error" : ""}`}>
             <label htmlFor="name">
               <span className="required">*</span> Name
             </label>
             <input
+              {...register("name")}
               type="text"
               name="name"
               placeholder="Enter your name"
-              required
+              className={errors.name ? "error" : ""}
             />
+            {errors.name && <p className="error">{errors.name.message}</p>}
           </div>
-          <div className="form-group">
-            <label htmlFor="login">
+          <div className={`form-group ${errors.email ? "error" : ""}`}>
+            <label htmlFor="email">
               <span className="required">*</span> Email
             </label>
             <input
+              {...register("email")}
               type="text"
-              name="login"
+              name="email"
               placeholder="Enter your email"
-              required
+              className={errors.email ? "error" : ""}
             />
+            {errors.email && <p className="error">{errors.email.message}</p>}
           </div>
-          <div className="form-group">
+          <div className={`form-group ${errors.login ? "error" : ""}`}>
             <label htmlFor="login">
               <span className="required">*</span> Login
             </label>
             <input
+              {...register("login")}
               type="text"
               name="login"
               placeholder="Enter your login"
-              required
+              className={errors.login ? "error" : ""}
             />
+            {errors.login && <p className="error">{errors.login.message}</p>}
           </div>
 
-          <div className="form-group">
+          <div className={`form-group ${errors.password ? "error" : ""}`}>
             <label htmlFor="password">
               <span className="required">*</span> Password
             </label>
             <input
+              {...register("password")}
               type="password"
               name="password"
               placeholder="Enter your password"
-              required
+              className={errors.password ? "error" : ""}
             />
+            {errors.password && (
+              <p className="error">{errors.password.message}</p>
+            )}
           </div>
-          <div className="form-group">
+          <div
+            className={`form-group ${errors.confirmPassword ? "error" : ""}`}
+          >
             <label htmlFor="confirmPassword">
               <span className="required">*</span> Confirm Password
             </label>
             <input
+              {...register("confirmPassword")}
               type="password"
               name="confirmPassword"
               placeholder="Confirm your password"
-              required
+              className={errors.confirmPassword ? "error" : ""}
             />
+            {errors.confirmPassword && (
+              <p className="error">{errors.confirmPassword.message}</p>
+            )}
           </div>
 
           <CustomButton className="btn submit-btn">
-            <span className="text-button">Sign Up</span>
-            <Icons.ArrowRight className="icon-button" />
+            {isSubmitting ? (
+              "Loading..."
+            ) : (
+              <>
+                <span className="text-button">Sign Up</span>
+                <Icons.ArrowRight className="icon-button" />
+              </>
+            )}
           </CustomButton>
         </form>
         <p className="form-info">

@@ -44,9 +44,13 @@ const UserAvatar = () => {
                 </CustomButton>
               </Link>
               <div className={styles.Actions}>
-                <Dialog.Close className={styles.Button}>
-                  <CustomButton variant="outlineTeal">Close</CustomButton>
-                </Dialog.Close>
+                <CustomButton
+                  variant="outlineTeal"
+                  className={styles.Button}
+                  onClick={toggleDialog}
+                >
+                  Close
+                </CustomButton>
               </div>
             </Dialog.Popup>
           </Dialog.Portal>
