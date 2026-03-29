@@ -6,10 +6,13 @@ import { MenuItems, SocialLinks } from "../../lib/constants";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import UserAvatar from "./user-avatar";
+import useIsMobile from "@/hooks/use-is-mobile";
 
 const Navbar = () => {
   const params = usePathname();
   const [isActiveMenu, setIsActiveMenu] = useState<boolean>(false);
+
+  const isMobile = useIsMobile();
 
   const toggleMenu = () => {
     setIsActiveMenu((prev) => !prev);
@@ -54,9 +57,10 @@ const Navbar = () => {
               ))}
             </ul>
 
-            <UserAvatar />
+            {!isMobile && <UserAvatar />}
           </nav>
 
+          {isMobile && <UserAvatar />}
           <button
             className={`burger-menu ${isActiveMenu && "active"}`}
             aria-label="Toggle menu"
