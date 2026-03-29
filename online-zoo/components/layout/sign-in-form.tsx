@@ -8,11 +8,13 @@ import { LoginFormData, loginSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/auth-context";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const SignInForm = () => {
   const router = useRouter();
+  const { setUser } = useAuth();
   const {
     register,
     handleSubmit,
@@ -41,6 +43,7 @@ const SignInForm = () => {
       toast.success("Successfully signed in!", { removeDelay: 500 });
       if (result) {
         localStorage.setItem("user", JSON.stringify(result.data));
+        setUser(result.data);
       }
       router.push("/");
     } catch (error) {

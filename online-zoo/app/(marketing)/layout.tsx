@@ -3,6 +3,7 @@ import { Montserrat, Montserrat_Alternates } from "next/font/google";
 import "@/styles/globals.css";
 import { Footer, Navbar } from "@/components/layout";
 import { Toaster } from "react-hot-toast";
+import AuthProvider from "@/context/auth-context";
 
 const montserrat = Montserrat({
   variable: "--font-primary",
@@ -32,10 +33,12 @@ export default function RootLayout({
       <body
         className={`${montserrat.variable} ${montserratAlternates.variable} antialiased root`}
       >
-        <Navbar />
-        {children}
-        <Footer />
-        <Toaster />
+        <AuthProvider>
+          <Navbar />
+          {children}
+          <Footer />
+          <Toaster />
+        </AuthProvider>
       </body>
     </html>
   );
