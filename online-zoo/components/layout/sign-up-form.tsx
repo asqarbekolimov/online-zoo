@@ -47,7 +47,6 @@ const SignUpForm = () => {
       toast.dismiss();
       toast.success("Successfully signed in!", { removeDelay: 500 });
       if (result) {
-        localStorage.setItem("user", JSON.stringify(result.data));
         setUser(result.data);
       }
       router.push("/");

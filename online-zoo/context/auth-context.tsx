@@ -1,6 +1,11 @@
 "use client";
 
-import { createContext, useContext, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  type ReactNode,
+} from "react";
 
 type AuthUser = {
   user?: {
@@ -19,24 +24,41 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
+const getStoredUser = (): AuthUser => {
+  if (typeof window === "undefined") {
+    return null;
+  }
+
+  const storedUser = window.localStorage.getItem("user");
+
+  if (!storedUser) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(storedUser);
+  } catch (error) {
+    console.error("Failed to parse user data:", error);
+    window.localStorage.removeItem("user");
+    return null;
+  }
+};
+
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<AuthUser>(() => {
-    const storedUser = localStorage.getItem("user");
+  const [user, setUserState] = useState<AuthUser>(getStoredUser);
 
-    if (!storedUser) {
-      return null;
+  const setUser = (nextUser: AuthUser) => {
+    setUserState(nextUser);
+
+    if (nextUser) {
+      window.localStorage.setItem("user", JSON.stringify(nextUser));
+      return;
     }
 
-    try {
-      return JSON.parse(storedUser);
-    } catch (error) {
-      console.error("Failed to parse user data:", error);
-      return null;
-    }
-  });
+    window.localStorage.removeItem("user");
+  };
 
   const logout = () => {
-    localStorage.removeItem("user");
     setUser(null);
   };
 
