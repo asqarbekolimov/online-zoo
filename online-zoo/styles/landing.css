@@ -1237,7 +1237,7 @@
   border-radius: 5px;
   box-shadow: 0px 4px 50px 0px rgba(0, 0, 0, 0.3);
   max-width: 1160px;
-  width: 90%;
+  width: 100%;
   max-height: 95vh;
   overflow: auto;
 }
@@ -1415,10 +1415,29 @@
   background-color: var(--color-white);
   border-radius: 5px;
   box-shadow: 0px 4px 50px 0px rgba(0, 0, 0, 0.5);
-  max-width: 920px;
-  width: 90%;
-  max-height: 90vh;
-  overflow: auto;
+  /* max-width: 920px; */
+  width: 100%;
+  max-height: 95vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Scrollbar styling */
+.donation-form-modal::-webkit-scrollbar {
+  width: 8px;
+}
+
+.donation-form-modal::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.donation-form-modal::-webkit-scrollbar-thumb {
+  background-color: var(--color-orange);
+  border-radius: 4px;
+}
+
+.donation-form-modal::-webkit-scrollbar-thumb:hover {
+  background-color: #d26004;
 }
 
 .donation-form-modal .modal-close {
@@ -1449,7 +1468,7 @@
 }
 
 .donation-step {
-  padding: 30px 120px 40px;
+  padding: 20px 100px 20px;
 }
 
 .donation-step.hidden {
@@ -1538,7 +1557,8 @@
   transition: background-color 0.3s ease;
 }
 
-.other-amount-btn:hover {
+.other-amount-btn:hover,
+.other-amount-btn.selected {
   background-color: var(--color-orange);
 }
 
@@ -1598,11 +1618,19 @@
   border-radius: 5px;
   font-family: var(--font-primary);
   font-size: 18px;
-  color: #a4a8ae;
+
   background-color: var(--color-white);
   cursor: pointer;
   display: flex;
   align-items: center;
+}
+
+.non-selected-text {
+  color: #a4a8ae;
+}
+
+.selected-text {
+  color: var(--color-black);
 }
 
 .select-selected::after {
@@ -1737,6 +1765,12 @@
 }
 
 /* Form Grid (Steps 2 & 3) */
+.form-flex {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1817,7 +1851,7 @@
   gap: 10px;
   min-width: 180px;
   height: 55px;
-  padding: 15px 35px;
+  /* padding: 15px 35px; */
   background-color: var(--color-turquoise);
   border: none;
   border-radius: 5px;
@@ -1832,7 +1866,7 @@
 
 .next-btn:hover,
 .submit-btn:hover {
-  background-color: var(--color-orange);
+  background-color: var(--color-orange) !important;
 }
 
 .back-btn {

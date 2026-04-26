@@ -4,6 +4,7 @@ import "@/styles/globals.css";
 import { Footer, Navbar } from "@/components/layout";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "@/context/auth-context";
+import DonationModal from "@/components/donation-modal";
 
 const montserrat = Montserrat({
   variable: "--font-primary",
@@ -38,6 +39,7 @@ export default function RootLayout({
           {children}
           <Footer />
           <Toaster />
+          <DonationModal />
         </AuthProvider>
       </body>
     </html>

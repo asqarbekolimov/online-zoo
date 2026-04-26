@@ -9,7 +9,8 @@ type ButtonVariant =
   | "outlineTeal"
   | "outlineNavy"
   | "darkNavy"
-  | "ghostOrange";
+  | "ghostOrange"
+  | "link";
 
 interface CustomButtonProps extends React.PropsWithChildren {
   variant?: ButtonVariant;
@@ -28,6 +29,7 @@ const getVariantClass = (variant: ButtonVariant = "orange") => {
     outlineNavy: styles.outlineNavy,
     darkNavy: styles.darkNavy,
     ghostOrange: styles.ghostOrange,
+    link: styles.link,
   };
   return variantMap[variant] || variantMap.orange;
 };

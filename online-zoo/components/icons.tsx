@@ -386,4 +386,22 @@ export const Icons = {
       />
     </svg>
   ),
+  XIcon: () => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 30 30"
+      fill="none"
+    >
+      <path
+        d="M29.0002 1L1 29.0002M1.00024 1L29.0005 29.0002"
+        stroke="white"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="currentColor"
+      />
+    </svg>
+  ),
 };

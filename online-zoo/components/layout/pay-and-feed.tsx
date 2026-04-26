@@ -1,8 +1,17 @@
+"use client";
+
 import Image from "next/image";
 import { Icons } from "../icons";
 import CustomButton from "../ui/button";
+import { useDonationModal } from "@/store/use-modal";
 
 const PayAndFeed = () => {
+  const { setOpenModal } = useDonationModal();
+
+  const onDonateClick = () => {
+    setOpenModal(true);
+  };
+
   return (
     <>
       <section className="pay-and-feed">
@@ -178,7 +187,7 @@ const PayAndFeed = () => {
                   about and make a real personal impact. Never doubt that your
                   donation can make a difference even if it is small.
                 </p>
-                <CustomButton variant="orange">
+                <CustomButton variant="orange" onClick={onDonateClick}>
                   <span className="text-button">Donate now</span>
                   <Icons.ArrowRight />
                 </CustomButton>

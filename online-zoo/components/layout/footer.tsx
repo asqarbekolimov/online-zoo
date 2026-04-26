@@ -1,9 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import { Icons } from "@/components/icons";
 import CustomButton from "../ui/button";
 import { MenuItems, SocialLinks } from "../../lib/constants";
+import { useDonationModal } from "@/store/use-modal";
 
 const Footer = () => {
+  const { setOpenModal } = useDonationModal();
+
   return (
     <>
       <footer className="footer">
@@ -25,7 +30,10 @@ const Footer = () => {
               ))}
             </ul>
 
-            <CustomButton variant="outlineWhite">
+            <CustomButton
+              variant="outlineWhite"
+              onClick={() => setOpenModal(true)}
+            >
               <span className="text-button">donate for volunteers</span>
               <Icons.ArrowRight />
             </CustomButton>

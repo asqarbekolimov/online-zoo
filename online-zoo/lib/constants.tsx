@@ -79,3 +79,5 @@ export const AnimalsLocation: {
     icon: <Icons.CaolaIcon />,
   },
 ];
+
+export const DonationAmounts = [20, 30, 50, 80, 100, 0];
