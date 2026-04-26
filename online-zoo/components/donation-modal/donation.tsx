@@ -5,6 +5,7 @@ import { Icons } from "../icons";
 import { DonationAmounts } from "@/lib/constants";
 import CustomButton from "../ui/button";
 import { useState, useEffect } from "react";
+import type { ChangeEvent } from "react";
 import { getPets } from "@/lib/api";
 import { IPet } from "@/types";
 
@@ -12,6 +13,11 @@ const Donation = () => {
   const [selectPet, setSelectPet] = useState(false);
   const [pets, setPets] = useState<IPet[] | []>([]);
   const [selectedPet, setSelectedPet] = useState<IPet | null>(null);
+  const [otherAmount, setOtherAmount] = useState("");
+  const [errors, setErrors] = useState({
+    amount: "",
+    pet: "",
+  });
 
   const { setStep, setOpenModal, setAmount, amount } = useDonationModal();
 
@@ -28,15 +34,54 @@ const Donation = () => {
     fetchPets();
   }, []);
 
-  console.log(pets);
+  const handleAmountClick = (selectedAmount: number) => {
+    setAmount(selectedAmount);
+    setErrors((currentErrors) => ({ ...currentErrors, amount: "" }));
 
-  const handleAmountClick = (amount: number) => {
-    setAmount(amount);
+    if (selectedAmount > 0) {
+      setOtherAmount("");
+    }
   };
 
   const handleSelectPet = (pet: IPet) => {
     setSelectedPet(pet);
     setSelectPet(false);
+    setErrors((currentErrors) => ({ ...currentErrors, pet: "" }));
+  };
+
+  const handleOtherAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value.replace(/[^\d]/g, "");
+
+    setOtherAmount(value);
+    setAmount(0);
+    setErrors((currentErrors) => ({ ...currentErrors, amount: "" }));
+  };
+
+  const handleNext = () => {
+    const nextErrors = {
+      amount: "",
+      pet: "",
+    };
+    const customAmount = Number(otherAmount);
+
+    if (amount === 0 && (!otherAmount || customAmount <= 0)) {
+      nextErrors.amount = "Enter donation amount.";
+    }
+
+    if (!selectedPet) {
+      nextErrors.pet = "Choose your favourite pet.";
+    }
+
+    if (nextErrors.amount || nextErrors.pet) {
+      setErrors(nextErrors);
+      return;
+    }
+
+    if (amount === 0) {
+      setAmount(customAmount);
+    }
+
+    setStep("donor");
   };
 
   return (
@@ -68,6 +113,7 @@ const Donation = () => {
                 (item) =>
                   item > 0 && (
                     <button
+                      type="button"
                       key={item}
                       className={`amount-btn ${amount === item ? "selected" : ""}`}
                       data-amount={item}
@@ -80,6 +126,7 @@ const Donation = () => {
             </div>
             <div className="other-amount-row">
               <button
+                type="button"
                 className={`other-amount-btn ${amount === 0 ? "selected" : ""}`}
                 onClick={() => handleAmountClick(0)}
               >
@@ -87,15 +134,25 @@ const Donation = () => {
               </button>
               <input
                 type="text"
-                className="other-amount-input"
-                placeholder=""
+                inputMode="numeric"
+                className={`other-amount-input ${
+                  errors.amount ? "input-error" : ""
+                }`}
+                placeholder="$"
+                value={otherAmount}
+                onChange={handleOtherAmountChange}
               />
             </div>
+            {errors.amount && (
+              <p className="donation-field-error">{errors.amount}</p>
+            )}
             <div className="special-pet-row">
-              <button className="special-pet-btn">for special pet</button>
+              <button type="button" className="special-pet-btn">
+                for special pet
+              </button>
               <div className="custom-select" id="petSelect">
                 <div
-                  className="select-selected"
+                  className={`select-selected ${errors.pet ? "input-error" : ""}`}
                   onClick={() => setSelectPet((state) => !state)}
                 >
                   {selectedPet ? (
@@ -130,6 +187,7 @@ const Donation = () => {
                 </div>
               </div>
             </div>
+            {errors.pet && <p className="donation-field-error">{errors.pet}</p>}
             <div className="recurring-gift">
               <label className="checkbox-container">
                 <input type="checkbox" id="recurringGift" />
@@ -146,15 +204,12 @@ const Donation = () => {
             </div>
             <CustomButton
               variant="teal"
-              onClick={() => setStep("donor")}
+              onClick={handleNext}
               className="next-btn"
             >
               <span>NEXT</span>
               <Icons.ArrowRight />
             </CustomButton>
-            {/* <button className="next-btn" onClick={() => setStep("donor")}>
-              <span>NEXT</span>
-            </button> */}
           </div>
         </div>
       </div>

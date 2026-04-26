@@ -16,6 +16,7 @@ interface CustomButtonProps extends React.PropsWithChildren {
   variant?: ButtonVariant;
   disabled?: boolean;
   className?: string;
+  type?: "button" | "submit" | "reset";
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
@@ -39,6 +40,7 @@ export default function CustomButton({
   variant = "orange",
   disabled = false,
   className = "",
+  type,
   onClick,
 }: CustomButtonProps) {
   const baseClasses = styles.Button;
@@ -46,7 +48,12 @@ export default function CustomButton({
   const combinedClasses = `${baseClasses} ${variantClass} ${className}`.trim();
 
   return (
-    <button className={combinedClasses} disabled={disabled} onClick={onClick}>
+    <button
+      className={combinedClasses}
+      disabled={disabled}
+      type={type}
+      onClick={onClick}
+    >
       {children}
     </button>
   );

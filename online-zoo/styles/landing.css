@@ -1577,6 +1577,19 @@
   border-color: var(--color-turquoise);
 }
 
+.other-amount-input.input-error,
+.select-selected.input-error {
+  border-color: #d43c2f;
+}
+
+.donation-field-error {
+  margin: -16px 0 16px 200px;
+  font-family: var(--font-primary);
+  font-size: 14px;
+  line-height: 1.4;
+  color: #d43c2f;
+}
+
 /* Special Pet Row */
 .special-pet-row {
   display: flex;
@@ -1808,6 +1821,18 @@
   border-color: var(--color-turquoise);
 }
 
+.donation-form-content .form-group input.error {
+  border-color: #d43c2f;
+}
+
+.donation-form-content .form-group p.error {
+  margin: 0;
+  font-family: var(--font-primary);
+  font-size: 14px;
+  line-height: 1.4;
+  color: #d43c2f;
+}
+
 /* Footer */
 .donation-form-footer {
   display: flex;
@@ -1945,6 +1970,10 @@
   .other-amount-input,
   .custom-select {
     width: 100%;
+  }
+
+  .donation-field-error {
+    margin-left: 0;
   }
 
   .form-grid {

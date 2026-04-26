@@ -3,13 +3,28 @@
 import { useDonationModal } from "@/store/use-modal";
 import { Icons } from "../icons";
 import CustomButton from "../ui/button";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { DonorFormData, donorSchema } from "@/lib/validation";
 
 const Donor = () => {
   const { setStep, setOpenModal } = useDonationModal();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<DonorFormData>({
+    resolver: zodResolver(donorSchema),
+  });
+
+  const onSubmit = () => {
+    setStep("payment");
+  };
 
   return (
-    <div className="donation-form-modal">
+    <form className="donation-form-modal" onSubmit={handleSubmit(onSubmit)}>
       <button
+        type="button"
         className="modal-close"
         id="donationFormClose"
         aria-label="Close modal"
@@ -23,20 +38,32 @@ const Donor = () => {
 
       <div className="donation-form-divider"></div>
       <div className="donation-step">
-        <h4 className="donation-section-title">Donor Information:</h4>
+        <h4 className="donation-section-title">Billing Information:</h4>
         <div className="donation-form-content">
           <div className="form-flex">
-            <div className="form-group">
-              <label>
+            <div className={`form-group ${errors.name ? "error" : ""}`}>
+              <label htmlFor="donorName">
                 <span className="required">*</span> Your Name
               </label>
-              <input type="text" id="firstName" />
+              <input
+                {...register("name")}
+                type="text"
+                id="donorName"
+                className={errors.name ? "error" : ""}
+              />
+              {errors.name && <p className="error">{errors.name.message}</p>}
             </div>
-            <div className="form-group">
-              <label>
+            <div className={`form-group ${errors.email ? "error" : ""}`}>
+              <label htmlFor="donorEmail">
                 <span className="required">*</span> Your Email Address
               </label>
-              <input type="email" id="email" />
+              <input
+                {...register("email")}
+                type="email"
+                id="donorEmail"
+                className={errors.email ? "error" : ""}
+              />
+              {errors.email && <p className="error">{errors.email.message}</p>}
 
               <p className="text-body">
                 You will receive emails from the Online Zoo, including updates
@@ -53,12 +80,17 @@ const Donor = () => {
             <span className="step-dot"></span>
           </div>
           <div className="footer-buttons">
-            <CustomButton variant="link" onClick={() => setStep("donation")}>
+            <CustomButton
+              type="button"
+              variant="link"
+              onClick={() => setStep("donation")}
+            >
               <span>BACK</span>
             </CustomButton>
             <CustomButton
+              type="submit"
               variant="teal"
-              onClick={() => setStep("payment")}
+              disabled={isSubmitting}
               className="next-btn"
             >
               <span>NEXT</span>
@@ -67,7 +99,7 @@ const Donor = () => {
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

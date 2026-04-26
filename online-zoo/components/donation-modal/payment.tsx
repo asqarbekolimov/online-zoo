@@ -3,14 +3,50 @@
 import { useDonationModal } from "@/store/use-modal";
 import { Icons } from "../icons";
 import CustomButton from "../ui/button";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { PaymentFormData, paymentSchema } from "@/lib/validation";
+import type { ChangeEvent } from "react";
+
+const formatExpirationDate = (value: string) => {
+  const digits = value.replace(/\D/g, "").slice(0, 4);
+
+  if (digits.length <= 2) {
+    return digits;
+  }
+
+  return `${digits.slice(0, 2)}/${digits.slice(2)}`;
+};
 
 const Payment = () => {
   const { setStep, setOpenModal } = useDonationModal();
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors, isSubmitting },
+  } = useForm<PaymentFormData>({
+    resolver: zodResolver(paymentSchema),
+  });
+
+  const onSubmit = () => {
+    setStep("success");
+  };
+
+  const handleExpirationDateChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const formattedValue = formatExpirationDate(event.target.value);
+
+    event.target.value = formattedValue;
+    setValue("expirationDate", formattedValue, { shouldValidate: true });
+  };
+
   return (
-    <div className="donation-form-modal">
+    <form className="donation-form-modal" onSubmit={handleSubmit(onSubmit)}>
       <button
+        type="button"
         className="modal-close"
         id="donationFormClose"
+        aria-label="Close modal"
         onClick={() => setOpenModal(false)}
       >
         <Icons.XIcon />
@@ -24,34 +60,77 @@ const Payment = () => {
         <h4 className="donation-section-title">Payment Information:</h4>
         <div className="donation-form-content">
           <div className="form-grid">
-            <div className="form-group full-width">
-              <label>
+            <div
+              className={`form-group full-width ${
+                errors.cardNumber ? "error" : ""
+              }`}
+            >
+              <label htmlFor="cardNumber">
                 <span className="required">*</span> Card number
               </label>
               <input
+                {...register("cardNumber")}
                 type="text"
                 id="cardNumber"
                 placeholder="1234 5678 9012 3456"
-                required
+                inputMode="numeric"
+                className={errors.cardNumber ? "error" : ""}
               />
+              {errors.cardNumber && (
+                <p className="error">{errors.cardNumber.message}</p>
+              )}
             </div>
-            <div className="form-group">
-              <label>
+            <div
+              className={`form-group ${errors.expirationDate ? "error" : ""}`}
+            >
+              <label htmlFor="expirationDate">
                 <span className="required">*</span> Expiration date
               </label>
-              <input type="text" id="expDate" placeholder="MM/YY" required />
+              <input
+                {...register("expirationDate")}
+                type="text"
+                id="expirationDate"
+                placeholder="MM/YY"
+                inputMode="numeric"
+                maxLength={5}
+                className={errors.expirationDate ? "error" : ""}
+                onChange={handleExpirationDateChange}
+              />
+              {errors.expirationDate && (
+                <p className="error">{errors.expirationDate.message}</p>
+              )}
             </div>
-            <div className="form-group">
-              <label>
+            <div className={`form-group ${errors.cvv ? "error" : ""}`}>
+              <label htmlFor="cvv">
                 <span className="required">*</span> CVV
               </label>
-              <input type="text" id="cvv" placeholder="123" required />
+              <input
+                {...register("cvv")}
+                type="text"
+                id="cvv"
+                placeholder="123"
+                inputMode="numeric"
+                className={errors.cvv ? "error" : ""}
+              />
+              {errors.cvv && <p className="error">{errors.cvv.message}</p>}
             </div>
-            <div className="form-group full-width">
-              <label>
+            <div
+              className={`form-group full-width ${
+                errors.cardholderName ? "error" : ""
+              }`}
+            >
+              <label htmlFor="cardholderName">
                 <span className="required">*</span> Cardholder name
               </label>
-              <input type="text" id="cardholderName" required />
+              <input
+                {...register("cardholderName")}
+                type="text"
+                id="cardholderName"
+                className={errors.cardholderName ? "error" : ""}
+              />
+              {errors.cardholderName && (
+                <p className="error">{errors.cardholderName.message}</p>
+              )}
             </div>
           </div>
         </div>
@@ -62,17 +141,26 @@ const Payment = () => {
             <span className="step-dot active"></span>
           </div>
           <div className="footer-buttons">
-            <CustomButton variant="link" onClick={() => setStep("donor")}>
+            <CustomButton
+              type="button"
+              variant="link"
+              onClick={() => setStep("donor")}
+            >
               <span>BACK</span>
             </CustomButton>
-            <CustomButton variant="orange" className="submit-btn">
+            <CustomButton
+              type="submit"
+              variant="orange"
+              disabled={isSubmitting}
+              className="submit-btn"
+            >
               <span>Complete Donation</span>
               <Icons.ArrowRight />
             </CustomButton>
           </div>
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 
