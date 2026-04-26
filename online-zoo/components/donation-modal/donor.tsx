@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { DonorFormData, donorSchema } from "@/lib/validation";
 
 const Donor = () => {
-  const { setStep, setOpenModal } = useDonationModal();
+  const { setStep, setOpenModal, setDonationData } = useDonationModal();
   const {
     register,
     handleSubmit,
@@ -17,7 +17,12 @@ const Donor = () => {
     resolver: zodResolver(donorSchema),
   });
 
-  const onSubmit = () => {
+  const onSubmit = (data: DonorFormData) => {
+    setDonationData((currentData) => ({
+      ...currentData,
+      name: data.name,
+      email: data.email,
+    }));
     setStep("payment");
   };
 

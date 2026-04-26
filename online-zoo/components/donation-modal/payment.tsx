@@ -7,6 +7,9 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PaymentFormData, paymentSchema } from "@/lib/validation";
 import type { ChangeEvent } from "react";
+import toast from "react-hot-toast";
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const formatExpirationDate = (value: string) => {
   const digits = value.replace(/\D/g, "").slice(0, 4);
@@ -19,7 +22,7 @@ const formatExpirationDate = (value: string) => {
 };
 
 const Payment = () => {
-  const { setStep, setOpenModal } = useDonationModal();
+  const { setStep, setOpenModal, donationData } = useDonationModal();
   const {
     register,
     handleSubmit,
@@ -29,8 +32,29 @@ const Payment = () => {
     resolver: zodResolver(paymentSchema),
   });
 
-  const onSubmit = () => {
-    setStep("success");
+  const onSubmit = async () => {
+    try {
+      toast.loading("Processing donation...");
+      const res = await fetch(`${API_URL}/donations`, {
+        method: "POST",
+        body: JSON.stringify(donationData),
+      });
+
+      const result = await res.json();
+
+      if (!res.ok) {
+        toast.dismiss();
+        toast.error(result.error, { removeDelay: 500 });
+        return;
+      }
+
+      toast.dismiss();
+      toast.success("Donation processed successfully!", { removeDelay: 500 });
+      setOpenModal(false);
+      setStep("popup");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleExpirationDateChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -154,8 +178,14 @@ const Payment = () => {
               disabled={isSubmitting}
               className="submit-btn"
             >
-              <span>Complete Donation</span>
-              <Icons.ArrowRight />
+              {isSubmitting ? (
+                <span>Processing...</span>
+              ) : (
+                <>
+                  <span>Complete Donation</span>
+                  <Icons.ArrowRight />
+                </>
+              )}
             </CustomButton>
           </div>
         </div>

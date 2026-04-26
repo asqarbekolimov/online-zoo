@@ -51,6 +51,7 @@ export default function CustomButton({
     <button
       className={combinedClasses}
       disabled={disabled}
+      data-disabled={disabled ? "" : undefined}
       type={type}
       onClick={onClick}
     >

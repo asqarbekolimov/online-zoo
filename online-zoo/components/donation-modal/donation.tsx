@@ -1,6 +1,7 @@
 "use client";
 
 import { useDonationModal } from "@/store/use-modal";
+import type { DonationData } from "@/store/use-modal";
 import { Icons } from "../icons";
 import { DonationAmounts } from "@/lib/constants";
 import CustomButton from "../ui/button";
@@ -19,7 +20,8 @@ const Donation = () => {
     pet: "",
   });
 
-  const { setStep, setOpenModal, setAmount, amount } = useDonationModal();
+  const { setStep, setOpenModal, setAmount, amount, setDonationData } =
+    useDonationModal();
 
   useEffect(() => {
     const fetchPets = async () => {
@@ -81,6 +83,11 @@ const Donation = () => {
       setAmount(customAmount);
     }
 
+    setDonationData((currentData: DonationData) => ({
+      ...currentData,
+      amount: amount === 0 ? customAmount : amount,
+      petId: selectedPet ? selectedPet.id : 0,
+    }));
     setStep("donor");
   };
 
