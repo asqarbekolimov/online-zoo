@@ -24,7 +24,7 @@ const AnimalDetail = async ({ params }: PageProps) => {
   return (
     <div>
       <>
-        <LiveCams  animal={animal} />
+        <LiveCams animal={animal} />
 
         <YourDonation
           title={`make the ${animal?.type} Donation!`}

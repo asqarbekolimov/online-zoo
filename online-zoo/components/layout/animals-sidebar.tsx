@@ -57,7 +57,10 @@ const AnimalsSidebar = ({ data }: Props) => {
         <ul className="sidebar__list" ref={carouselRef}>
           {!data && <p>loading</p>}
           {data.map((animal) => (
-            <li key={animal.id} className={`sidebar__item${pathname === `/zoo/${animal.id}` ? ' sidebar__item--active' : ''}`}>
+            <li
+              key={animal.id}
+              className={`sidebar__item${pathname === `/zoo/${animal.id}` ? " sidebar__item--active" : ""}`}
+            >
               <Link href={`/zoo/${animal.id}`} className="sidebar__item-link">
                 <div className="sidebar__item-icon">
                   <svg

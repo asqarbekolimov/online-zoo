@@ -47,10 +47,7 @@ export const registerSchema = z
 export type RegisterFormData = z.infer<typeof registerSchema>;
 
 export const donorSchema = z.object({
-  name: z
-    .string()
-    .trim()
-    .min(2, "Name should be at least 2 characters long."),
+  name: z.string().trim().min(2, "Name should be at least 2 characters long."),
   email: email("Invalid email address."),
 });
 
