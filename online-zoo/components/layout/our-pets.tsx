@@ -5,6 +5,7 @@ import { Icons } from "../icons";
 import CustomButton from "../ui/button";
 import { useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface OurPetsProps {
   pets: IPet[];
@@ -85,7 +86,7 @@ const OurPets = ({ pets }: OurPetsProps) => {
                     <div className="card_body">
                       <h3>{pet.name}</h3>
                       <p>{pet.description}</p>
-                      <a href={`/pages/pet/${pet.id}`}>
+                      <Link href={`/zoo/${pet.id}`}>
                         <button className="ghost-btn">
                           <span className="btn-text">VIEW LIVE CAM</span>
                           <svg
@@ -103,7 +104,7 @@ const OurPets = ({ pets }: OurPetsProps) => {
                             />
                           </svg>
                         </button>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 ))}

@@ -8,7 +8,6 @@ import {
   UsersFeedbacks,
 } from "@/components/layout";
 import { getFeedbacks, getPets } from "@/lib/api";
-import { Suspense } from "react";
 
 const HomePage = async () => {
   const pets = await getPets();
@@ -25,13 +24,9 @@ const HomePage = async () => {
               on the internet. Tune in to watch your favourite animals — live,
               24/7!"
         />
-        <Suspense fallback={<p>Loading...</p>}>
-          <OurPets pets={pets.data} />
-        </Suspense>
+        <OurPets pets={pets.data} />
         <PayAndFeed />
-        <Suspense fallback={<p>Loading...</p>}>
-          <UsersFeedbacks feedbacks={feedbacks.data} />
-        </Suspense>
+        <UsersFeedbacks feedbacks={feedbacks.data} />
         <CareAnimals />
       </main>
     </>
