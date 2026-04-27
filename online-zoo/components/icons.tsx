@@ -165,6 +165,21 @@ export const Icons = {
       />
     </svg>
   ),
+  ArrowBottom: (props: Icon) => (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="15"
+      height="9"
+      viewBox="0 0 15 9"
+      fill="none"
+      {...props}
+    >
+      <path
+        d="M1.34091 0L0 1.36504L7.5 9L15 1.36504L13.6591 0L7.5 6.26992L1.34091 0Z"
+        fill="white"
+      />
+    </svg>
+  ),
   RsSchoolLogo: () => (
     <svg
       xmlns="http://www.w3.org/2000/svg"

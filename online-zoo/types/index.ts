@@ -13,3 +13,18 @@ export interface IFeedback {
   text: string;
   name: string;
 }
+
+export interface IAnimal {
+  id: number;
+  commonName: string;
+  scientificName: string;
+  type: string;
+  size: string;
+  diet: string;
+  habitat: string;
+  range: string;
+  latitude: string;
+  longitude: string;
+  description: string;
+  detailedDescription: string;
+}

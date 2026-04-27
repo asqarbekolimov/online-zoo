@@ -15,3 +15,13 @@ export const getFeedbacks = async () => {
   }
   return data.json();
 };
+
+export const getAnimalById = async (id: number) => {
+  const response = await fetch(`${API_URL}/pets/${id}`);
+  if (!response.ok) {
+    console.error('Failed to fetch animal by ID', response.status);
+    return undefined;
+  }
+  const json = await response.json();
+  return json.data;
+};
