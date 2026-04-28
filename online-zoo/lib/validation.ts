@@ -94,3 +94,12 @@ export const paymentSchema = z.object({
 });
 
 export type PaymentFormData = z.infer<typeof paymentSchema>;
+
+export const contactSchema = z.object({
+  name: z.string().trim().min(2, "Name should be at least 2 characters long."),
+  email: z.string().email("Invalid email address."),
+  subject: z.string().trim().min(5, "Subject should be at least 5 characters long."),
+  message: z.string().trim().min(10, "Message should be at least 10 characters long."),
+});
+
+export type ContactFormData = z.infer<typeof contactSchema>;
