@@ -1,0 +1,36 @@
+import {
+  CareAnimals,
+  FavouriteAnimals,
+  HowItWorks,
+  OurPets,
+  PayAndFeed,
+  QuickDonation,
+  UsersFeedbacks,
+} from "@/components/layout";
+import { getFeedbacks, getPets } from "@/lib/api";
+
+const HomePage = async () => {
+  const pets = await getPets();
+  const feedbacks = await getFeedbacks();
+
+  return (
+    <>
+      <main>
+        <FavouriteAnimals />
+        <HowItWorks />
+        <QuickDonation
+          title="Your donation makes a difference!"
+          description="The Online Zoo's animal webcams are some of the most famous
+              on the internet. Tune in to watch your favourite animals — live,
+              24/7!"
+        />
+        <OurPets pets={pets.data} />
+        <PayAndFeed />
+        <UsersFeedbacks feedbacks={feedbacks.data} />
+        <CareAnimals />
+      </main>
+    </>
+  );
+};
+
+export default HomePage;

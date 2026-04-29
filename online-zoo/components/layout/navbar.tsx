@@ -1,0 +1,79 @@
+"use client";
+
+import Link from "next/link";
+import { Icons } from "@/components/icons";
+import { MenuItems, SocialLinks } from "../../lib/constants";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import UserAvatar from "./user-avatar";
+import useIsMobile from "@/hooks/use-is-mobile";
+
+const Navbar = () => {
+  const params = usePathname();
+  const [isActiveMenu, setIsActiveMenu] = useState<boolean>(false);
+
+  const isMobile = useIsMobile();
+
+  const toggleMenu = () => {
+    setIsActiveMenu((prev) => !prev);
+  };
+
+  return (
+    <>
+      <header>
+        <div className="header">
+          <Link href="/">
+            <span className="logo">
+              <span>online</span>
+              <span className="logo_zo">
+                <span>ZO</span>
+                <Icons.pandoLogo />
+              </span>
+            </span>
+          </Link>
+
+          <nav className={`navbar ${isActiveMenu && "active"}`}>
+            <ul className="nav_items">
+              {MenuItems.map((item) => (
+                <li key={item.path}>
+                  <Link
+                    href={item.path}
+                    className={`nav-link ${params === item.path && "nav-link--active"}`}
+                    onClick={toggleMenu}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            <ul className="socials">
+              {SocialLinks.map((link) => (
+                <li key={link.link}>
+                  <Link href={link.link} aria-label={link.name}>
+                    {link.icon}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            {!isMobile && <UserAvatar />}
+          </nav>
+
+          {isMobile && <UserAvatar />}
+          <button
+            className={`burger-menu ${isActiveMenu && "active"}`}
+            aria-label="Toggle menu"
+            onClick={toggleMenu}
+          >
+            <span className="burger-line"></span>
+            <span className="burger-line"></span>
+            <span className="burger-line"></span>
+          </button>
+        </div>
+      </header>
+    </>
+  );
+};
+
+export default Navbar;
